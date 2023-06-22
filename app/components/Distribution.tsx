@@ -9,7 +9,7 @@ async function getCourseData(subjectArea: string, catalogNumber: string) {
     return json;
 }
 
-function compareGrades(a, b) {
+function compareGrades(a: string, b: string) {
     const gradeOrdering = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F', 'P', 'NP', 'I'];
     const indexOfA = gradeOrdering.indexOf(a);
     const indexOfB = gradeOrdering.indexOf(b);
@@ -29,7 +29,7 @@ type CourseProps = {
 }
 
 const Distribution = ({ subjectArea, catalogNumber }: CourseProps) => {
-    const [courseData, setCourseData] = useState([]);
+    const [courseData, setCourseData] = useState<any[]>([]);
     const gradeCounts =
         courseData
             .reduce((acc, row) => {
