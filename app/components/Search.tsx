@@ -27,7 +27,7 @@ const Search = () => {
                         onChange={e => setSubjectArea(e.target.value)}
                         autoFocus>
                         {Object.keys(courses).map(subjectArea => (
-                            <option value={subjectArea}>{subjectArea}</option>
+                            <option key={subjectArea} value={subjectArea}>{subjectArea}</option>
                         ))}
                     </select>
                 </div>
