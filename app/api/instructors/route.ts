@@ -30,9 +30,6 @@ export async function GET() {
         }
     }
 
-    console.log(coursesByInstructor["BIANCHI, DANIELE"]["A&O SCI"])
-
-
     return NextResponse.json(JSON.parse(JSON.stringify(
         coursesByInstructor,
         // Convert Sets to Arrays so they are correctly stringified

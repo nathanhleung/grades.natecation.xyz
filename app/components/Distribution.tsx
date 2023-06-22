@@ -33,7 +33,6 @@ const Distribution = ({ subjectArea, catalogNumber }: CourseProps) => {
     const gradeCounts =
         courseData
             .reduce((acc, row) => {
-                console.log({ row })
                 if (!acc[row.gradeOffered]) {
                     acc[row.gradeOffered] = 0;
                 }
