@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 type QueryResultsProps<T> = {
     /** The search query */
@@ -13,9 +13,10 @@ type QueryResultsProps<T> = {
     /**
      * A function which takes in a query and returns another
      * function which returns whether the given datum matches
-     * the query or not.
+     * the query or not and a match score. Higher score means
+     * higher up in results.
      */
-    matcher(query: string): (datum: T) => boolean;
+    matcher(query: string): (datum: T) => { matches: boolean, score: number };
     /**
      * Called when the user requests to reset the search.
      */
@@ -44,11 +45,24 @@ function QueryResults<T>({
     renderResult,
     noResultsMessage = "No results",
 }: QueryResultsProps<T>) {
-    const predicate = useCallback(matcher(query), [query]);
-    const results = data.filter(predicate);
+    const matcherForQuery = useCallback(matcher(query), [query]);
+
+    const predicate = useCallback((datum: T) => {
+        return matcherForQuery(datum).matches;
+    }, [matcherForQuery])
+
+    const results = useMemo(() => {
+        return data.filter(predicate).sort((a, b) => {
+            const aScore = matcherForQuery(a).score;
+            const bScore = matcherForQuery(b).score;
+
+            // Higher is better
+            return bScore - aScore;
+        });
+    }, [data, predicate, matcherForQuery])
 
     return (
-        <div>
+        <div className="shadow-lg">
             <ul>
                 {results.map((datum) => (
                     <li

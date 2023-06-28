@@ -61,6 +61,7 @@ const Search = () => {
                             setSelectedSubjectArea("");
                             setSubjectAreaQuery(selectedSubjectArea);
                             setCatalogNumberQuery("");
+                            subjectAreaQueryInputRef.current?.select();
                         }
                     }}
                 />
@@ -72,6 +73,16 @@ const Search = () => {
                         value={catalogNumberQuery}
                         onChange={e => setCatalogNumberQuery(e.target.value)}
                         placeholder="Course number"
+                        onKeyDown={(e) => {
+                            // If the user backspaces and there's nothing in the
+                            // input, go back to searching for a department.
+                            if (e.key === "Backspace" && catalogNumberQuery === "") {
+                                setSelectedSubjectArea("");
+                                setSubjectAreaQuery(selectedSubjectArea);
+                                setCatalogNumberQuery("");
+                                subjectAreaQueryInputRef.current?.focus();
+                            }
+                        }}
                     />
                 )}
             </div>
