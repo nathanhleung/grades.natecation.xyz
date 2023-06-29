@@ -34,7 +34,7 @@ const Search = () => {
 
     return (
         <div
-            className="flex flex-col align-center justify-center"
+            className="flex flex-col align-center justify-center w-full"
         >
             <h1 className="text-2xl lg:text-3xl mb-6 text-center">
                 {subjectAreaQuery === ""
@@ -115,9 +115,6 @@ const Search = () => {
                     onResetSearch={() => {
                         setCatalogNumberQuery('');
                         catalogNumberQueryInputRef.current?.focus();
-                    }}
-                    onSelectCatalogNumber={(catalogNumber) => {
-                        alert(catalogNumber);
                     }}
                 />
             )}

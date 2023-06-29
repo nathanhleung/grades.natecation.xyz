@@ -89,7 +89,7 @@ const SubjectAreaQueryResults = ({
 
             return {
                 matches,
-                score: courses[subjectArea].length,
+                score: Object.entries(courses[subjectArea]).length,
             }
         }
     }
@@ -103,7 +103,7 @@ const SubjectAreaQueryResults = ({
             onSelectResult={onSelectSubjectArea}
             noResultsMessage="No departments found matching your query"
             renderResult={(subjectArea) => {
-                const nCourses = courses[subjectArea].length;
+                const nCourses = Object.values(courses[subjectArea]).length;
 
                 return (
                     <div className="text-black bg-gray-100 cursor-pointer p-4 border-t-gray-200 border-t-2">

@@ -22,9 +22,9 @@ type QueryResultsProps<T> = {
      */
     onResetSearch(): void;
     /**
-     * Called when the user selects a result.
+     * Called when the user clicks/selects a result.
      */
-    onSelectResult(result: T): void;
+    onSelectResult?(result: T): void;
     /**
      * Renders a search result.
      */
@@ -40,7 +40,7 @@ function QueryResults<T>({
     matcher,
     data,
     onResetSearch,
-    onSelectResult,
+    onSelectResult = () => { },
     keyExtractor = (datum) => datum?.toString() ?? '',
     renderResult,
     noResultsMessage = "No results",
@@ -68,6 +68,7 @@ function QueryResults<T>({
                     <li
                         key={keyExtractor(datum)}
                         onClick={() => onSelectResult(datum)}
+                        className="hover:opacity-50"
                     >
                         {renderResult(datum)}
                     </li>
