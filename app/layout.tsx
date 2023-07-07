@@ -1,10 +1,13 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { DM_Sans } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const dmSans = DM_Sans({ weight: ['400', '700'], style: ['normal', 'italic'], subsets: ['latin'] })
 
 export const metadata = {
-  title: 'UCLA Grade Distributions 2021-22',
+  title: {
+    template: '%s | UCLA Grade Distributions 2021-22',
+    default: 'UCLA Grade Distributions 2021-22',
+  },
   description: 'Grade distribution data was sourced through a public records request made under the California Public Records Act. We raised $131.25 from UCLA students to obtain these records.',
 }
 
@@ -15,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={dmSans.className}>{children}</body>
     </html>
   )
 }

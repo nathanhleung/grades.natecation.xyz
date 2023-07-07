@@ -1,36 +1,47 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
-import { SubjectAreaQueryResults } from "./SubjectAreaQueryResults";
+import useCourses from "@/app/hooks/useCourses";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { CatalogNumberQueryResults } from "./CatalogNumberQueryResults";
-
-/**
- * Gets a list of courses from the backend
- * 
- * @returns a list of courses is JSON format
- */
-async function getCourses() {
-    const res = await fetch('/api/courses');
-    const json = await res.json();
-    return json;
-}
+import { SubjectAreaQueryResults } from "./SubjectAreaQueryResults";
+import { Loading } from "../Loading";
 
 const Search = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const [subjectAreaQuery, setSubjectAreaQuery] = useState('');
-    const [courses, setCourses] = useState<any>({});
+    const { courses, loading } = useCourses();
     const [selectedSubjectArea, setSelectedSubjectArea] = useState('');
     const subjectAreaQueryInputRef = useRef<HTMLInputElement>(null);
     const catalogNumberQueryInputRef = useRef<HTMLInputElement>(null);
     const [catalogNumberQuery, setCatalogNumberQuery] = useState('');
 
     useEffect(() => {
-        getCourses().then(setCourses);
+        if (searchParams.has('subjectArea')) {
+            const subjectAreaParam = searchParams.get('subjectArea') ?? "";
+            setSelectedSubjectArea(subjectAreaParam);
+            setSubjectAreaQuery(subjectAreaParam)
+
+            // For some reason we need to call `requestAnimationFrame`
+            // twice for the `focus` to actually work.
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    catalogNumberQueryInputRef.current?.focus();
+                });
+            });
+        }
     }, []);
 
     const searchingForSubjectArea = (
         (subjectAreaQuery !== '') &&
         (selectedSubjectArea === '')
     );
+
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <div
@@ -45,7 +56,7 @@ const Search = () => {
             </h1>
             <div className="flex gap-2">
                 <input
-                    className="flex-1 p-4 mb-6 outline-none text-center text-2xl text-black shadow-lg dark:shadow-gray-700 disabled:bg-white"
+                    className="flex-1 p-4 mb-6 outline-none text-center text-2xl text-black font-bold shadow-lg dark:shadow-gray-700 disabled:bg-white"
                     type="text"
                     ref={subjectAreaQueryInputRef}
                     value={selectedSubjectArea || subjectAreaQuery}
@@ -62,12 +73,13 @@ const Search = () => {
                             setSubjectAreaQuery(selectedSubjectArea);
                             setCatalogNumberQuery("");
                             subjectAreaQueryInputRef.current?.select();
+                            router.push(pathname);
                         }
                     }}
                 />
                 {selectedSubjectArea && (
                     <input
-                        className="flex-1 p-4 mb-6 outline-none text-center text-2xl text-black shadow-lg dark:shadow-gray-700 disabled:bg-white"
+                        className="flex-1 p-4 mb-6 outline-none text-center text-2xl text-black font-bold shadow-lg dark:shadow-gray-700 disabled:bg-white"
                         type="text"
                         ref={catalogNumberQueryInputRef}
                         value={catalogNumberQuery}
@@ -81,6 +93,7 @@ const Search = () => {
                                 setSubjectAreaQuery(selectedSubjectArea);
                                 setCatalogNumberQuery("");
                                 subjectAreaQueryInputRef.current?.focus();
+                                router.push(pathname);
                             }
                         }}
                     />
@@ -96,6 +109,8 @@ const Search = () => {
                     }}
                     onSelectSubjectArea={(subjectArea) => {
                         setSelectedSubjectArea(subjectArea);
+                        router.push(`${pathname}?subjectArea=${subjectArea}`)
+
                         // Wait until next tick to ensure component is mounted
                         requestAnimationFrame(() => {
                             catalogNumberQueryInputRef.current?.focus();

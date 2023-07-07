@@ -1,6 +1,6 @@
 const About = () => {
     return (
-        <p className="text-gray-400 dark:text-gray-700 text-sm">
+        <p className="text-gray-400 dark:text-gray-700 text-sm italic">
             Grade distribution data was sourced through a
             {" "}
             <a

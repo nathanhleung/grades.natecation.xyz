@@ -1,27 +1,15 @@
 "use client";
 
+import 'chart.js/auto';
+import { ChartData } from 'chart.js/auto';
+import { groupBy, mapValues, maxBy, size, sum, sumBy } from 'lodash';
+import { get } from 'lodash/fp';
 import { useEffect, useState } from "react";
-import { Bar, BarChart, Legend, Tooltip, XAxis, YAxis } from 'recharts';
-
-async function getCourseData(subjectArea: string, catalogNumber: string) {
-    const res = await fetch(`/api/course/${subjectArea}/${catalogNumber}`);
-    const json = await res.json();
-    return json;
-}
-
-function compareGrades(a: string, b: string) {
-    const gradeOrdering = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F', 'P', 'NP', 'I'];
-    const indexOfA = gradeOrdering.indexOf(a);
-    const indexOfB = gradeOrdering.indexOf(b);
-
-    if (indexOfA === -1) {
-        return 1;
-    }
-    if (indexOfB === -1) {
-        return -1;
-    }
-    return indexOfA - indexOfB;
-}
+import { Bar } from 'react-chartjs-2';
+import Select from 'react-select';
+import useCourseData from '../hooks/useCourseData';
+import { compareGrades } from "../utils";
+import { Loading } from './Loading';
 
 type CourseProps = {
     subjectArea: string;
@@ -29,41 +17,163 @@ type CourseProps = {
 }
 
 const Distribution = ({ subjectArea, catalogNumber }: CourseProps) => {
-    const [courseData, setCourseData] = useState<any[]>([]);
-    const gradeCounts =
-        courseData
-            .reduce((acc, row) => {
-                if (!acc[row.gradeOffered]) {
-                    acc[row.gradeOffered] = 0;
-                }
-                acc[row.gradeOffered] += parseInt(row.gradeCount, 10);
-                return acc;
-            }, {})
-    const chartData = Object.keys(gradeCounts).map(gradeOffered => ({
-        gradeOffered,
-        gradeCount: gradeCounts[gradeOffered],
-    })).sort((a, b) => {
-        return compareGrades(a.gradeOffered, b.gradeOffered);
-    });
+    const { courseData } = useCourseData(subjectArea, catalogNumber);
+    const [selectedInstructorName, setSelectedInstructorName] = useState<string>('');
+    const [selectedTerm, setSelectedTerm] = useState<string>('');
+
+    const courseDataByInstructorName = groupBy(
+        courseData,
+        get('instructorName')
+    );
+
+    const rowCountByInstructorName = mapValues(courseDataByInstructorName, size);
+    const [instructorWithMostSections] = maxBy(
+        Object.entries(rowCountByInstructorName),
+        get('1')
+    ) ?? [];
 
     useEffect(() => {
-        getCourseData(subjectArea, catalogNumber).then(setCourseData);
-    }, [subjectArea, catalogNumber]);
+        if (selectedInstructorName === '') {
+            setSelectedInstructorName(instructorWithMostSections ?? '');
+        }
+    }, [instructorWithMostSections])
+
+    const courseDataByInstructorNameByTerm = mapValues(
+        courseDataByInstructorName,
+        courseDataForInstructorName => {
+            const courseDataForInstructorNameByTerm = groupBy(
+                courseDataForInstructorName,
+                get('enrollmentTerm')
+            );
+            return courseDataForInstructorNameByTerm;
+        }
+    );
+
+    const gradeCountsByInstructorNameByTerm = mapValues(
+        courseDataByInstructorNameByTerm,
+        courseDataForInstructorNameByTerm => {
+            return mapValues(
+                courseDataForInstructorNameByTerm,
+                courseDataForInstructorNameForTerm => {
+                    const courseDataForInstructorNameForTermByGradeOffered = groupBy(
+                        courseDataForInstructorNameForTerm,
+                        get('gradeOffered')
+                    );
+                    const gradeCountsForInstructorNameForTermByGradeOffered = mapValues(
+                        courseDataForInstructorNameForTermByGradeOffered,
+                        courseDataForInstructorNameForTermForGradeOffered => {
+                            return sumBy(
+                                courseDataForInstructorNameForTermForGradeOffered,
+                                get('gradeCount')
+                            );
+                        }
+                    );
+                    return gradeCountsForInstructorNameForTermByGradeOffered;
+                }
+            )
+        }
+    );
+
+    const instructorNames = Object.keys(gradeCountsByInstructorNameByTerm);
+    const instructorTerms = Object.keys(gradeCountsByInstructorNameByTerm[selectedInstructorName] ?? []);
+
+    useEffect(() => {
+        setSelectedTerm(instructorTerms[0]);
+    }, [selectedInstructorName]);
+
+    const gradeCountsForInstructorNameForTerm =
+        gradeCountsByInstructorNameByTerm?.[selectedInstructorName]?.[selectedTerm];
+    const totalGradeCountForInstructorNameForTerm =
+        sum(Object.values(gradeCountsForInstructorNameForTerm ?? {}).map(Number));
+
+    const chartData = Object.keys(gradeCountsForInstructorNameForTerm ?? {}).map(gradeOffered =>
+        ({ x: gradeOffered, y: gradeCountsForInstructorNameForTerm[gradeOffered] })
+    ).sort((a, b) => {
+        return compareGrades(a.x, b.x);
+    });
+
+    const chartConfig: ChartData<"bar"> = {
+        datasets: [{
+            data: chartData,
+        }],
+    }
 
     return (
         <div className="text-center">
-            <h2 className="text-2xl mb-4">{courseData[0]?.courseTitle}</h2>
-            <div className="flex justify-center">
-                <BarChart data={chartData} height={500} width={500}>
-                    <XAxis dataKey="gradeOffered" />
-                    <YAxis />
-                    <Tooltip cursor={false} />
-                    <Legend />
-                    <Bar dataKey="gradeCount" fill="rgb(59 130 246)" />
-                </BarChart>
-            </div>
+            <h2 className="text-2xl my-6">{courseData[0]?.courseTitle}</h2>
+            {courseData.length > 0 ? (
+                <div className="flex flex-col justify-center">
+                    <div className="flex gap-4 mb-4 text-left">
+                        <div className="flex-[2]">
+                            <label className="block mb-1 text-sm font-bold">Instructor Name</label>
+                            <Select
+                                value={{
+                                    label: selectedInstructorName,
+                                    value: selectedInstructorName
+                                }}
+                                onChange={(newSelectedInstructorName) => {
+                                    if (
+                                        newSelectedInstructorName !== null &&
+                                        newSelectedInstructorName.value !== selectedInstructorName
+                                    ) {
+                                        setSelectedInstructorName(newSelectedInstructorName.value);
+                                        setSelectedTerm('');
+                                    }
+                                }}
+                                options={instructorNames.map(instructorName => ({
+                                    value: instructorName,
+                                    label: instructorName
+                                }))}
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <label className="block mb-1 text-sm font-bold">Term</label>
+                            <Select
+                                value={{
+                                    label: selectedTerm,
+                                    value: selectedTerm
+                                }}
+                                onChange={(newSelectedTerm) => {
+                                    if (newSelectedTerm !== null) {
+                                        setSelectedTerm(newSelectedTerm.value);
+                                    }
+                                }}
+                                options={instructorTerms.map(instructorTerm => ({
+                                    value: instructorTerm,
+                                    label: instructorTerm
+                                }))}
+                            />
+                        </div>
+                    </div>
+                    <Bar
+                        data={chartConfig}
+                        options={{
+                            animation: {
+                                duration: 0,
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    ticks: {
+                                        callback: (value) => {
+                                            const decimal = Number(value) / totalGradeCountForInstructorNameForTerm;
+                                            return `${(decimal * 100).toFixed(1)}%`;
+                                        }
+                                    }
+                                }
+                            }
+                        }}
+                    />
+                </div>
+            ) : (
+                <Loading />
+            )}
         </div>
     )
 }
 
-export { Distribution }
+export { Distribution };

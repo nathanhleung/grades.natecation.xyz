@@ -23,7 +23,7 @@ export async function GET() {
             return {
                 ...pick(rows[0], 'courseTitle'),
                 catalogNumber: key,
-                nSections: rows.length,
+                nRows: rows.length,
             };
         });
     }

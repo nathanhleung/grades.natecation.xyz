@@ -1,4 +1,3 @@
-import { getSubjectAreaLongName } from "@/app/utils";
 import { QueryResults } from "./QueryResults";
 import Link from "next/link";
 
@@ -26,7 +25,7 @@ const CatalogNumberQueryResults = ({
     query,
     onResetSearch,
 }: CatalogNumberQueryResultsProps) => {
-    const subjectAreaCourses = Object.values(courses[subjectArea]);
+    const subjectAreaCourses = Object.values(courses[subjectArea] ?? {});
 
     return (
         <QueryResults
@@ -36,7 +35,7 @@ const CatalogNumberQueryResults = ({
             matcher={matchCourse}
             noResultsMessage="No courses found matching your query"
             renderResult={(row) => {
-                const nSections = courses[subjectArea][row.catalogNumber].nSections;
+                const nRows = courses[subjectArea][row.catalogNumber].nRows;
 
                 return (
                     <Link href={`/${subjectArea}/${row.catalogNumber}`}>
@@ -44,14 +43,16 @@ const CatalogNumberQueryResults = ({
                             <div className="flex">
                                 <div className="flex-1">
                                     <div>
-                                        <h3 className="text-xl">{subjectArea} {row.catalogNumber}</h3>
+                                        <h3 className="text-xl font-bold">{subjectArea} {row.catalogNumber}</h3>
                                         <p className="text-md">{courses[subjectArea][row.catalogNumber].courseTitle}</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-1 items-center justify-end">
-                                    <div className="text-center">
-                                        <h3 className="text-2xl">{nSections}</h3>
-                                        <p className="text-xs">{nSections === 1 ? "section" : "sections"}</p>
+                                    <div className="text-center min-w-[100px]">
+                                        <h3 className="text-2xl">
+                                            {nRows > 50 ? "great" : nRows > 10 ? "good" : "limited"}
+                                        </h3>
+                                        <p className="text-xs">data</p>
                                     </div>
                                 </div>
                             </div>

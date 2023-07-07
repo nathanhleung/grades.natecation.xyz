@@ -174,3 +174,27 @@ export function getSubjectAreaLongName(subjectArea: string) {
         "YIDDSH": "Yiddish",
     }[subjectArea] ?? '';
 }
+
+/**
+ * Compares two letter grades
+ * 
+ * @param a the first grade to compare
+ * @param b the second grade to compare
+ * @returns a positive value if the first grade is worse than the second,
+ *  0 if they are equal, negative if the first grade is better than the
+ *  second. Example: `compareGrades("A+", "B+")` would return a negative
+ * value.
+ */
+export function compareGrades(a: string, b: string) {
+    const gradeOrdering = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F', 'P', 'NP', 'I'];
+    const indexOfA = gradeOrdering.indexOf(a);
+    const indexOfB = gradeOrdering.indexOf(b);
+
+    if (indexOfA === -1) {
+        return 1;
+    }
+    if (indexOfB === -1) {
+        return -1;
+    }
+    return indexOfA - indexOfB;
+}
