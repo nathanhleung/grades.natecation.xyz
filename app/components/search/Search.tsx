@@ -47,7 +47,7 @@ const Search = () => {
         <div
             className="flex flex-col align-center justify-center w-full"
         >
-            <h1 className="text-2xl lg:text-3xl mb-6 text-center">
+            <h1 className="text-2xl lg:text-3xl mb-6 text-center font-bold">
                 {subjectAreaQuery === ""
                     ? "I want grade distributions for classes in the"
                     : selectedSubjectArea === ""
@@ -119,7 +119,7 @@ const Search = () => {
                 />
             ) : (
                 subjectAreaQuery === "" && (
-                    <h1 className="text-2xl lg:text-3xl text-center">department</h1>
+                    <h1 className="text-2xl lg:text-3xl text-center font-bold">department</h1>
                 )
             )}
             {selectedSubjectArea && (

@@ -76,10 +76,10 @@ function QueryResults<T>({
                 {query !== "" && results.length === 0 && (
                     <li className="text-black bg-white cursor-pointer p-4 border-t-gray-100 border-t-2">
                         <div className="flex justify-between">
-                            <p className="italic">
+                            <p className="italic font-normal text-gray-400">
                                 {noResultsMessage}
                             </p>
-                            <p className="text-blue-400 dark:text-blue-800 hover:opacity-50 cursor-pointer" onClick={onResetSearch}>
+                            <p className="text-uclaBlue hover:opacity-50 cursor-pointer" onClick={onResetSearch}>
                                 Reset search
                             </p>
                         </div>

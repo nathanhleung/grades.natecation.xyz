@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Bar } from 'react-chartjs-2';
 import Select from 'react-select';
 import useCourseData from '../hooks/useCourseData';
-import { compareGrades } from "../utils";
+import { compareGrades, getTermLongName } from "../utils";
 import { Loading } from './Loading';
 
 type CourseProps = {
@@ -130,7 +130,7 @@ const Distribution = ({ subjectArea, catalogNumber }: CourseProps) => {
                             <label className="block mb-1 text-sm font-bold">Term</label>
                             <Select
                                 value={{
-                                    label: selectedTerm,
+                                    label: getTermLongName(selectedTerm),
                                     value: selectedTerm
                                 }}
                                 onChange={(newSelectedTerm) => {
@@ -140,7 +140,7 @@ const Distribution = ({ subjectArea, catalogNumber }: CourseProps) => {
                                 }}
                                 options={instructorTerms.map(instructorTerm => ({
                                     value: instructorTerm,
-                                    label: instructorTerm
+                                    label: getTermLongName(instructorTerm)
                                 }))}
                             />
                         </div>

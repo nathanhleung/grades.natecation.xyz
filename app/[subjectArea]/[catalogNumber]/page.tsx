@@ -27,10 +27,10 @@ export default function Course({ params }: { params: { subjectArea: string, cata
                 <div className="flex items-center justify-between mb-12">
                     <div className="flex-1 text-left">
                         <a
-                            className="text-md text-blue-400 dark:text-blue-800 hover:opacity-50"
+                            className="text-md text-uclaBlue hover:opacity-50"
                             href={`/?subjectArea=${rawSubjectArea}`}
                         >
-                            &laquo; Back to Search
+                            ‹ Back to Search
                         </a>
                     </div>
                     <div className="flex-1">
@@ -42,10 +42,6 @@ export default function Course({ params }: { params: { subjectArea: string, cata
                 </div>
                 <h1 className="text-4xl mb-4 font-bold">{subjectArea} {catalogNumber}</h1>
                 <Distribution subjectArea={subjectArea} catalogNumber={catalogNumber} />
-            </div>
-
-            <div className="flex flex-col text-center mt-16">
-                <About />
             </div>
         </main >
     )

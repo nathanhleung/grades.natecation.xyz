@@ -175,6 +175,24 @@ export function getSubjectAreaLongName(subjectArea: string) {
     }[subjectArea] ?? '';
 }
 
+export function getTermLongName(term: string) {
+    if (!term) {
+        return '';
+    }
+
+    const year = term.slice(0, 2);
+    const quarterAbbreviation = term.slice(2);
+    const quarterLongName = {
+        '1': "Summer",
+        '2': "Summer",
+        'F': "Fall",
+        'W': "Winter",
+        'S': "Spring",
+    }[quarterAbbreviation];
+
+    return `${quarterLongName} 20${year}`
+}
+
 /**
  * Compares two letter grades
  * 

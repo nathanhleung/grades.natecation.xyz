@@ -1,7 +1,6 @@
+import Link from 'next/link'
+import { About } from './components/About'
 import './globals.css'
-import { DM_Sans } from 'next/font/google'
-
-const dmSans = DM_Sans({ weight: ['400', '700'], style: ['normal', 'italic'], subsets: ['latin'] })
 
 export const metadata = {
   title: {
@@ -18,7 +17,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={dmSans.className}>{children}</body>
+      <body className="flex flex-col min-h-screen border-b-uclaBlue border-b-[12px]">
+        <div className="flex gap-12 w-full bg-uclaBlue text-white p-2 font-bold">
+          <Link href="/" className="hover:opacity-50">
+            grades.natecation.xyz
+          </Link>
+          <Link href="/about" className="font hover:opacity-50">
+            About
+          </Link>
+        </div>
+        <div className="flex-1">
+          {children}
+        </div>
+        <div className="flex flex-col text-center p-6 sm:p-12 md:p-16 md:max-w-[85%] lg:max-w-[60%] md:mx-auto justify-center">
+          <About />
+        </div>
+      </body>
     </html>
   )
 }
