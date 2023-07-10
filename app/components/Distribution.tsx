@@ -107,8 +107,8 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
         <div className="text-center">
             {courseData.length > 0 ? (
                 <div className="flex flex-col justify-center">
-                    <div className="flex gap-4 mb-4 text-left">
-                        <div className="flex-[2]">
+                    <div className="flex flex-col md:flex-row gap-2 md:gap-4 mb-4 text-left">
+                        <div className="flex-1 md:flex-[2]">
                             <label className="block mb-1 text-sm font-bold">
                                 Instructor Name
                             </label>

@@ -1,6 +1,7 @@
 import { About } from "./components/About";
 import "./globals.css";
 import { Navbar } from "./components/Navbar";
+import { MobileNavbar } from "./components/MobileNavbar";
 
 export const metadata = {
   title: {
@@ -19,7 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen border-b-uclaBlue border-b-[12px]">
-        <Navbar />
+        <div className="hidden md:visible">
+          <Navbar />
+        </div>
+        <div className="md:hidden">
+          <MobileNavbar />
+        </div>
         <div className="flex flex-1">{children}</div>
         <div className="flex flex-col text-center p-6 sm:p-12 md:p-16 md:w-[85%] lg:w-[60%] md:mx-auto justify-center">
           <About />

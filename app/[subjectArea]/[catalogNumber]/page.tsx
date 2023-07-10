@@ -68,15 +68,15 @@ export default function Course({
             </div>
           </div>
         </div>
-        <div className="w-full h-auto flex flex-1 justify-center p-6 sm:p-8 md:p-12 text-white bg-uclaBlue">
-          <div className="flex flex-col md:w-[65%] lg:w-[60%] xl:w-[50%] md:mx-auto items-center">
-            <div className="w-full text-black bg-white shadow p-12">
+        <div className="w-full h-auto flex flex-1 justify-center p-4 sm:p-8 md:p-12 text-white bg-uclaBlue">
+          <div className="flex flex-col w-full md:w-[65%] lg:w-[60%] xl:w-[50%] md:mx-auto items-center">
+            <div className="w-full text-black bg-white shadow p-4 sm:p-12">
               <Distribution
                 subjectArea={subjectArea}
                 catalogNumber={catalogNumber}
               />
             </div>
-            <div className="flex gap-12 mt-12">
+            <div className="flex flex-col md:flex-row gap-6 md:gap-12 mt-8">
               <a
                 className="text-md font-bold text-white border-white border-2 hover:opacity-50 p-4 rounded"
                 href={`/?subjectArea=${rawSubjectArea}`}
