@@ -17,7 +17,7 @@ export default function Home() {
       </div>
 
       <div className="w-full h-auto flex flex-1 justify-center p-6 sm:p-8 md:p-12 text-white bg-uclaBlue">
-        <div className="flex md:w-[65%] lg:w-[60%] xl:w-[50%] md:mx-auto items-center">
+        <div className="flex w-full md:w-[65%] lg:w-[60%] xl:w-[50%] md:mx-auto items-center">
           <Search />
         </div>
       </div>

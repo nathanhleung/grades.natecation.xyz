@@ -57,7 +57,7 @@ const Search = ({ onlyInput = false }: SearchProps) => {
                             : "I want the grade distribution for"}
                 </h1>
             )}
-            <div className="flex gap-2">
+            <div className="flex flex-col md:flex-row gap-2">
                 <input
                     className={classNames(
                         "flex-1 p-4 outline-none text-center text-2xl text-black",

@@ -35,7 +35,7 @@ function QueryResults<T>({
   query,
   matcher,
   data,
-  onSelectResult = () => {},
+  onSelectResult = () => { },
   keyExtractor = (datum) => datum?.toString() ?? "",
   renderResult,
   noResultsMessage = "No results",

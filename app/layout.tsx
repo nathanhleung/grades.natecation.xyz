@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen border-b-uclaBlue border-b-[12px]">
-        <div className="hidden md:visible">
+        <div className="hidden md:block">
           <Navbar />
         </div>
         <div className="md:hidden">

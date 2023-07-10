@@ -9,9 +9,12 @@ function matchCourse(query: string) {
   const normalizedQuery = query.toLowerCase().trim();
 
   return (row: ReturnType<typeof getSubjectAreaCourses>[number]) => {
+    // Sort by course number, ascending (strip all letters)
+    const score = -1 * Number(row.catalogNumber.replace(/\D/g, ""))
+
     return {
       matches: row.catalogNumber.toLowerCase().indexOf(normalizedQuery) !== -1,
-      score: 0,
+      score,
     };
   };
 }
@@ -40,6 +43,7 @@ const CatalogNumberQueryResults = ({
       data={subjectAreaCourses}
       query={query}
       matcher={matchCourse}
+      keyExtractor={it => it.catalogNumber}
       noResultsMessage="No courses found matching your query"
       renderResult={(row) => {
         const nRows = courses[subjectArea][row.catalogNumber].nRows;
