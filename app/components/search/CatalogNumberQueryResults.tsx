@@ -1,6 +1,6 @@
 import { Response } from "@/app/api/courses/route";
-import classNames from "classnames";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Loading } from "../Loading";
 import { QueryResults } from "./QueryResults";
 
@@ -12,12 +12,25 @@ function matchCourse(query: string) {
   const normalizedQuery = query.toLowerCase().trim();
 
   return (row: ReturnType<typeof getSubjectAreaCourses>[number]) => {
+    const { catalogNumber } = row;
+
     // Sort by course number, ascending (strip all letters)
-    const score = -1 * Number(row.catalogNumber.replace(/\D/g, ""))
+    let score = Number(catalogNumber.replace(/\D/g, ""));
+
+    // This makes sure sequences courses are ranked correctly
+    const lastCharCode = catalogNumber
+      .toLowerCase()
+      .charCodeAt(catalogNumber.length - 1);
+    // a-z lowercase in ASCII
+    if (lastCharCode >= 97 && lastCharCode <= 122) {
+      // This ensures the ordering 101 < 101A < 101Z < 102
+      score += (lastCharCode - 96) / 27;
+    }
 
     return {
       matches: row.catalogNumber.toLowerCase().indexOf(normalizedQuery) !== -1,
-      score,
+      // Sort by course number, ascending
+      score: -1 * score,
     };
   };
 }
@@ -64,8 +77,15 @@ type ResultProps = {
 }
 
 const Result = ({ courses, subjectArea, row }: ResultProps) => {
+  const pathname = usePathname();
   const [clicked, setClicked] = useState(false);
   const nRows = courses[subjectArea][row.catalogNumber].nRows;
+
+  // Fixes bug Pranav was experiencing on mobile
+  // where the loading state would stay stuck
+  useEffect(() => {
+    setClicked(false);
+  }, [pathname])
 
   return (
     <a

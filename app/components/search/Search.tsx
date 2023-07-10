@@ -82,7 +82,9 @@ const Search = ({ onlyInput = false }: SearchProps) => {
                             subjectAreaQueryInputRef.current?.select();
 
                             if (pathname === "/") {
-                                router.push(pathname);
+                                router.push(pathname, {
+                                    scroll: false,
+                                });
                             }
                         }
                     }}
@@ -109,7 +111,9 @@ const Search = ({ onlyInput = false }: SearchProps) => {
                                 subjectAreaQueryInputRef.current?.focus();
 
                                 if (pathname === "/") {
-                                    router.push(pathname);
+                                    router.push(pathname, {
+                                        scroll: false,
+                                    });
                                 }
                             }
                         }}
@@ -125,7 +129,9 @@ const Search = ({ onlyInput = false }: SearchProps) => {
                             setSelectedSubjectArea(subjectArea);
 
                             if (pathname === "/") {
-                                router.push(`${pathname}?subjectArea=${subjectArea}`);
+                                router.push(`${pathname}?subjectArea=${subjectArea}`, {
+                                    scroll: false,
+                                });
                             }
 
                             // Wait until next tick to ensure component is mounted

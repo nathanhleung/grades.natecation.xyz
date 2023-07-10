@@ -97,9 +97,10 @@ const SubjectAreaQueryResults = ({
                     (alias) => alias.toLowerCase().indexOf(normalizedQuery) !== -1,
                 );
 
-            // If someone is searching for 'cs', push 'COM SCI' to the top
             let score = Object.entries(courses[subjectArea]).length;
+
             if (query === 'cs' && subjectArea.toLowerCase() === 'com sci') {
+                // If someone is searching for 'cs', push 'COM SCI' to the top
                 score = 999;
             }
 
