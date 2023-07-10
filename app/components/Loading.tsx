@@ -1,6 +1,18 @@
+import classNames from "classnames";
 import { useEffect, useState } from "react";
 
-const Loading = () => {
+type LoadingProps = {
+  /**
+   * If `true`, all layout-related styles will be removed
+   */
+  noLayoutStyles?: boolean;
+  /**
+   * Additional classes to add to the container
+   */
+  className?: string;
+}
+
+const Loading = ({ noLayoutStyles = false, className = "" }: LoadingProps) => {
   const [dotCount, setDotCount] = useState(3);
 
   useEffect(() => {
@@ -14,14 +26,24 @@ const Loading = () => {
   }, [dotCount]);
 
   return (
-    <div className="w-full flex justify-center">
-      <h1 className="text-2xl text-left p-6 opacity-25 font-bold w-44">
+    <div
+      className={classNames(
+        !noLayoutStyles && "flex justify-center w-full",
+        className
+      )}
+    >
+      <h1
+        className={classNames(
+          "text-2xl opacity-25 font-bold",
+          !noLayoutStyles && "text-left w-44 p-6"
+        )}
+      >
         Loading
         {".".repeat(dotCount)}
         {/* &nbsp; */}
         {" ".repeat(3 - dotCount)}
       </h1>
-    </div>
+    </div >
   );
 };
 
