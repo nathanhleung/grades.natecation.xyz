@@ -1,7 +1,7 @@
 "use client";
 
 import "chart.js/auto";
-import { groupBy, mapValues, maxBy, size, sum, sumBy } from "lodash";
+import { groupBy, last, mapValues, maxBy, size, sum, sumBy } from "lodash";
 import { compose, get } from "lodash/fp";
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
@@ -76,7 +76,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
     );
 
     useEffect(() => {
-        setSelectedTerm(instructorTerms[0]);
+        setSelectedTerm(last(instructorTerms) ?? '');
     }, [selectedInstructorName]);
 
     const gradeCountsForInstructorNameForTerm =
