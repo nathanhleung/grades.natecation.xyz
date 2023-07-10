@@ -91,7 +91,7 @@ const Result = ({ courses, subjectArea, row }: ResultProps) => {
         // where the loading state would stay stuck
         setTimeout(() => {
           setClicked(false);
-        }, 250);
+        }, 500);
       }}
     >
       <div className="text-black bg-white cursor-pointer p-4 border-t-gray-100 border-t-2">
