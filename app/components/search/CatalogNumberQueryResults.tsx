@@ -24,6 +24,7 @@ function matchCourse(query: string) {
     // a-z lowercase in ASCII
     if (lastCharCode >= 97 && lastCharCode <= 122) {
       // This ensures the ordering 101 < 101A < 101Z < 102
+      // TODO(nathanhleung): handle honors math courses
       score += (lastCharCode - 96) / 27;
     }
 
@@ -77,20 +78,21 @@ type ResultProps = {
 }
 
 const Result = ({ courses, subjectArea, row }: ResultProps) => {
-  const pathname = usePathname();
   const [clicked, setClicked] = useState(false);
   const nRows = courses[subjectArea][row.catalogNumber].nRows;
-
-  // Fixes bug Pranav was experiencing on mobile
-  // where the loading state would stay stuck
-  useEffect(() => {
-    setClicked(false);
-  }, [pathname])
 
   return (
     <a
       href={`/${subjectArea}/${row.catalogNumber}`}
-      onClick={() => setClicked(true)}
+      onClick={() => {
+        setClicked(true);
+
+        // Fixes bug Pranav was experiencing on mobile
+        // where the loading state would stay stuck
+        setTimeout(() => {
+          setClicked(false);
+        }, 250);
+      }}
     >
       <div className="text-black bg-white cursor-pointer p-4 border-t-gray-100 border-t-2">
         <div className="flex">

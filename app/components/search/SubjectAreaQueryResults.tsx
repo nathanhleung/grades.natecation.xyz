@@ -99,9 +99,17 @@ const SubjectAreaQueryResults = ({
 
             let score = Object.entries(courses[subjectArea]).length;
 
-            if (query === 'cs' && subjectArea.toLowerCase() === 'com sci') {
+            if (query.toLowerCase() === 'cs' && subjectArea.toLowerCase() === 'com sci') {
                 // If someone is searching for 'cs', push 'COM SCI' to the top
                 score = 999;
+            }
+
+            // If the search term is at the start of
+            // department name, boost the score
+            if (getSubjectAreaLongName(subjectArea)
+                .toLowerCase()
+                .indexOf(normalizedQuery) === 0) {
+                score += 999;
             }
 
             return {
