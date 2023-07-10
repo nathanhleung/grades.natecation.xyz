@@ -8,7 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        uclaBlue: "rgba(39, 116, 174)",
+        uclaGold: "rgb(255, 209, 0)",
+        uclaBlue: "rgb(39, 116, 174)",
         uclaDarkerBlue: "rgba(0, 85, 135)",
       },
       backgroundImage: {

@@ -1,7 +1,9 @@
+import Link from "next/link"
+
 const About = () => {
     return (
-        <p className="text-gray-400 dark:text-gray-700 text-sm italic text-justify">
-            This website is not officially affiliated with UCLA. Grade distribution data was sourced through a
+        <p className="text-gray-400 text-sm italic text-justify">
+            This website is not affiliated with UCLA. Grade distribution data was sourced through a February 2023
             {" "}
             <a
                 target="_blank"
@@ -11,16 +13,23 @@ const About = () => {
             >
                 public records request
             </a>{" "}
-            made under the California Public Records Act. We{" "}
+            made under the California Public Records Act.{" "}
+            <Link
+                className="text-uclaBlue hover:opacity-50"
+                href="/shoutouts"
+            >
+                40+
+            </Link>
+            {" "}UCLA students{" "}
             <a
                 className="text-uclaBlue hover:opacity-50"
                 target="_blank"
                 rel="noreferrer"
                 href="https://drive.google.com/file/d/14LuoYaDCPUmts_6igA8rC3AVI2Ntyvqc/view?usp=sharing"
             >
-                raised $131.25
+                paid $131.25
             </a>{" "}
-            from UCLA students to obtain these records.<br /><br />UCLA students can download the data{" "}
+            to obtain these records.<br /><br />UCLA students can download the data{" "}
             <a
                 className="text-uclaBlue hover:opacity-50"
                 target="_blank"

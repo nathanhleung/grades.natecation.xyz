@@ -10,13 +10,14 @@ import Select from 'react-select';
 import useCourseData from '../hooks/useCourseData';
 import { compareGrades, getTermLongName } from "../utils";
 import { Loading } from './Loading';
+import { UCLA_BLUE_RGB } from '../constants';
 
-type CourseProps = {
+type DistributionProps = {
     subjectArea: string;
     catalogNumber: string;
 }
 
-const Distribution = ({ subjectArea, catalogNumber }: CourseProps) => {
+const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
     const { courseData } = useCourseData(subjectArea, catalogNumber);
     const [selectedInstructorName, setSelectedInstructorName] = useState<string>('');
     const [selectedTerm, setSelectedTerm] = useState<string>('');
@@ -95,12 +96,12 @@ const Distribution = ({ subjectArea, catalogNumber }: CourseProps) => {
     const chartConfig: ChartData<"bar"> = {
         datasets: [{
             data: chartData,
+            backgroundColor: `rgba(${UCLA_BLUE_RGB}, 0.4)`,
         }],
     }
 
     return (
         <div className="text-center">
-            <h2 className="text-2xl my-6">{courseData[0]?.courseTitle}</h2>
             {courseData.length > 0 ? (
                 <div className="flex flex-col justify-center">
                     <div className="flex gap-4 mb-4 text-left">
@@ -124,6 +125,26 @@ const Distribution = ({ subjectArea, catalogNumber }: CourseProps) => {
                                     value: instructorName,
                                     label: instructorName
                                 }))}
+                                styles={{
+                                    control(base, props) {
+                                        return ({
+                                            ...base,
+                                            boxShadow: 'none',
+                                            borderWidth: '2px',
+                                            borderColor: props.isFocused ? `rgb(${UCLA_BLUE_RGB})` : 'none',
+                                            ':hover': {
+                                                borderColor: `rgb(${UCLA_BLUE_RGB})`,
+                                            }
+                                        })
+                                    },
+                                    option(base, props) {
+                                        return ({
+                                            ...base,
+                                            color: props.isFocused ? 'white' : 'black',
+                                            background: props.isFocused ? `rgb(${UCLA_BLUE_RGB})` : 'white',
+                                        })
+                                    },
+                                }}
                             />
                         </div>
                         <div className="flex-1">
@@ -142,6 +163,26 @@ const Distribution = ({ subjectArea, catalogNumber }: CourseProps) => {
                                     value: instructorTerm,
                                     label: getTermLongName(instructorTerm)
                                 }))}
+                                styles={{
+                                    control(base, props) {
+                                        return ({
+                                            ...base,
+                                            boxShadow: 'none',
+                                            borderWidth: '2px',
+                                            borderColor: props.isFocused ? `rgb(${UCLA_BLUE_RGB})` : 'none',
+                                            ':hover': {
+                                                borderColor: `rgb(${UCLA_BLUE_RGB})`,
+                                            }
+                                        })
+                                    },
+                                    option(base, props) {
+                                        return ({
+                                            ...base,
+                                            color: (props.isFocused || props.isSelected) ? 'white' : 'black',
+                                            background: (props.isFocused || props.isSelected) ? `rgb(${UCLA_BLUE_RGB})` : 'white',
+                                        })
+                                    },
+                                }}
                             />
                         </div>
                     </div>
@@ -162,8 +203,10 @@ const Distribution = ({ subjectArea, catalogNumber }: CourseProps) => {
                                         callback: (value) => {
                                             const decimal = Number(value) / totalGradeCountForInstructorNameForTerm;
                                             return `${(decimal * 100).toFixed(1)}%`;
-                                        }
-                                    }
+                                        },
+                                    },
+                                    min: 0,
+                                    max: totalGradeCountForInstructorNameForTerm,
                                 }
                             }
                         }}

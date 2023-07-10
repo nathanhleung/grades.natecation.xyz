@@ -38,7 +38,7 @@ const CatalogNumberQueryResults = ({
                 const nRows = courses[subjectArea][row.catalogNumber].nRows;
 
                 return (
-                    <Link href={`/${subjectArea}/${row.catalogNumber}`}>
+                    <a href={`/${subjectArea}/${row.catalogNumber}`}>
                         <div className="text-black bg-white cursor-pointer p-4 border-t-gray-100 border-t-2">
                             <div className="flex">
                                 <div className="flex-1">
@@ -57,7 +57,7 @@ const CatalogNumberQueryResults = ({
                                 </div>
                             </div>
                         </div>
-                    </Link>
+                    </a>
                 )
             }}
         />

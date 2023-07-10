@@ -1,13 +1,18 @@
 "use client";
 
 import useCourses from "@/app/hooks/useCourses";
+import classNames from 'classnames';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { Loading } from "../Loading";
 import { CatalogNumberQueryResults } from "./CatalogNumberQueryResults";
 import { SubjectAreaQueryResults } from "./SubjectAreaQueryResults";
-import { Loading } from "../Loading";
 
-const Search = () => {
+type SearchProps = {
+    onlyInput: boolean;
+}
+
+const Search = ({ onlyInput }: SearchProps) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -47,16 +52,24 @@ const Search = () => {
         <div
             className="flex flex-col align-center justify-center w-full"
         >
-            <h1 className="text-2xl lg:text-3xl mb-6 text-center font-bold">
-                {subjectAreaQuery === ""
-                    ? "I want grade distributions for classes in the"
-                    : selectedSubjectArea === ""
-                        ? "I want grade distributions for classes in"
-                        : "I want the grade distribution for"}
-            </h1>
+            {!onlyInput && (
+                <h1 className="text-2xl lg:text-3xl mb-6 text-center font-bold">
+                    {subjectAreaQuery === ""
+                        ? "I want grade distributions for classes in the"
+                        : selectedSubjectArea === ""
+                            ? "I want grade distributions for classes in"
+                            : "I want the grade distribution for"}
+                </h1>
+            )}
             <div className="flex gap-2">
                 <input
-                    className="flex-1 p-4 mb-6 outline-none text-center text-2xl text-black font-bold shadow-lg dark:shadow-gray-700 disabled:bg-white"
+                    className={
+                        classNames(
+                            "flex-1 p-4 outline-none text-center text-2xl text-black",
+                            "font-bold shadow-lg disabled:bg-white rounded transition-all border-uclaBlue border-b-8 focus:border-uclaGold",
+                            selectedSubjectArea && "rounded-r-none"
+                        )
+                    }
                     type="text"
                     ref={subjectAreaQueryInputRef}
                     value={selectedSubjectArea || subjectAreaQuery}
@@ -73,13 +86,22 @@ const Search = () => {
                             setSubjectAreaQuery(selectedSubjectArea);
                             setCatalogNumberQuery("");
                             subjectAreaQueryInputRef.current?.select();
-                            router.push(pathname);
+
+                            if (pathname === '/') {
+                                router.push(pathname);
+                            }
                         }
                     }}
                 />
                 {selectedSubjectArea && (
                     <input
-                        className="flex-1 p-4 mb-6 outline-none text-center text-2xl text-black font-bold shadow-lg dark:shadow-gray-700 disabled:bg-white"
+                        className={
+                            classNames(
+                                "flex-1 p-4 outline-none text-center text-2xl text-black",
+                                "font-bold shadow-lg disabled:bg-white rounded",
+                                "rounded-l-none transition-all border-uclaBlue border-b-8 focus:border-uclaGold"
+                            )
+                        }
                         type="text"
                         ref={catalogNumberQueryInputRef}
                         value={catalogNumberQuery}
@@ -93,47 +115,57 @@ const Search = () => {
                                 setSubjectAreaQuery(selectedSubjectArea);
                                 setCatalogNumberQuery("");
                                 subjectAreaQueryInputRef.current?.focus();
-                                router.push(pathname);
+
+                                if (pathname === '/') {
+                                    router.push(pathname);
+                                }
                             }
                         }}
                     />
                 )}
             </div>
             {searchingForSubjectArea ? (
-                <SubjectAreaQueryResults
-                    courses={courses}
-                    query={subjectAreaQuery}
-                    onResetSearch={() => {
-                        setSubjectAreaQuery('');
-                        subjectAreaQueryInputRef.current?.focus();
-                    }}
-                    onSelectSubjectArea={(subjectArea) => {
-                        setSelectedSubjectArea(subjectArea);
-                        router.push(`${pathname}?subjectArea=${subjectArea}`)
+                <div className="mt-8">
+                    <SubjectAreaQueryResults
+                        courses={courses}
+                        query={subjectAreaQuery}
+                        onResetSearch={() => {
+                            setSubjectAreaQuery('');
+                            subjectAreaQueryInputRef.current?.focus();
+                        }}
+                        onSelectSubjectArea={(subjectArea) => {
+                            setSelectedSubjectArea(subjectArea);
 
-                        // Wait until next tick to ensure component is mounted
-                        requestAnimationFrame(() => {
-                            catalogNumberQueryInputRef.current?.focus();
-                        })
-                    }}
-                />
+                            if (pathname === '/') {
+                                router.push(`${pathname}?subjectArea=${subjectArea}`)
+                            }
+
+                            // Wait until next tick to ensure component is mounted
+                            requestAnimationFrame(() => {
+                                catalogNumberQueryInputRef.current?.focus();
+                            })
+                        }}
+                    />
+                </div>
             ) : (
-                subjectAreaQuery === "" && (
-                    <h1 className="text-2xl lg:text-3xl text-center font-bold">department</h1>
+                (!onlyInput && subjectAreaQuery === "") && (
+                    <h1 className="mt-8 text-2xl lg:text-3xl text-center font-bold">department</h1>
                 )
             )}
             {selectedSubjectArea && (
-                <CatalogNumberQueryResults
-                    courses={courses}
-                    subjectArea={selectedSubjectArea}
-                    query={catalogNumberQuery}
-                    onResetSearch={() => {
-                        setCatalogNumberQuery('');
-                        catalogNumberQueryInputRef.current?.focus();
-                    }}
-                />
+                <div className="mt-8">
+                    <CatalogNumberQueryResults
+                        courses={courses}
+                        subjectArea={selectedSubjectArea}
+                        query={catalogNumberQuery}
+                        onResetSearch={() => {
+                            setCatalogNumberQuery('');
+                            catalogNumberQueryInputRef.current?.focus();
+                        }}
+                    />
+                </div>
             )}
-        </div >
+        </div>
     );
 }
 

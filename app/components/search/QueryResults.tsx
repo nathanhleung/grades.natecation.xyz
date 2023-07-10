@@ -68,9 +68,11 @@ function QueryResults<T>({
                     <li
                         key={keyExtractor(datum)}
                         onClick={() => onSelectResult(datum)}
-                        className="hover:opacity-50"
+                        className="bg-uclaBlue"
                     >
-                        {renderResult(datum)}
+                        <div className="hover:opacity-50">
+                            {renderResult(datum)}
+                        </div>
                     </li>
                 ))}
                 {query !== "" && results.length === 0 && (
