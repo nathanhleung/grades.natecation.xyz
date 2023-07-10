@@ -18,10 +18,6 @@ type QueryResultsProps<T> = {
      */
     matcher(query: string): (datum: T) => { matches: boolean, score: number };
     /**
-     * Called when the user requests to reset the search.
-     */
-    onResetSearch(): void;
-    /**
      * Called when the user clicks/selects a result.
      */
     onSelectResult?(result: T): void;
@@ -39,7 +35,6 @@ function QueryResults<T>({
     query,
     matcher,
     data,
-    onResetSearch,
     onSelectResult = () => { },
     keyExtractor = (datum) => datum?.toString() ?? '',
     renderResult,
@@ -81,9 +76,14 @@ function QueryResults<T>({
                             <p className="italic font-normal text-gray-400">
                                 {noResultsMessage}
                             </p>
-                            <p className="text-uclaBlue hover:opacity-50 cursor-pointer" onClick={onResetSearch}>
-                                Reset search
-                            </p>
+                            <a
+                                className="text-uclaBlue hover:opacity-50"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfxHpdeTTvFzX4slKx-KGKgvqZM3GfABXIlHcuBHXiKhLhpwQ/viewform?usp=sf_link"
+                            >
+                                Report missing data
+                            </a>
                         </div>
                     </li>
                 )}

@@ -40,15 +40,21 @@ function getSubjectAreaAliases(subjectArea: string) {
 
 type SubjectAreaQueryResultsProps = {
     courses: any;
+    /**
+     * The subject area query
+     */
     query: string;
-    onResetSearch(): void;
+    /**
+     * Called when the user selects a subject area
+     * @param subjectArea the subject area that the user selected
+     *  from the query results
+     */
     onSelectSubjectArea(subjectArea: string): void;
 }
 
 const SubjectAreaQueryResults = ({
     courses,
     query,
-    onResetSearch,
     onSelectSubjectArea
 }: SubjectAreaQueryResultsProps) => {
     const subjectAreas = Object.keys(courses);
@@ -98,7 +104,6 @@ const SubjectAreaQueryResults = ({
         <QueryResults
             data={subjectAreas}
             query={query}
-            onResetSearch={onResetSearch}
             matcher={matchSubjectArea}
             onSelectResult={onSelectSubjectArea}
             noResultsMessage="No departments found matching your query"

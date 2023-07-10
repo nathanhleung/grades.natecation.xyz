@@ -14,16 +14,20 @@ function matchCourse(query: string) {
 
 type CatalogNumberQueryResultsProps = {
     courses: any;
+    /**
+     * The subject area within which we are searching for courses
+     */
     subjectArea: string;
+    /**
+     * The catalog number query
+     */
     query: string;
-    onResetSearch(): void;
 }
 
 const CatalogNumberQueryResults = ({
     courses,
     subjectArea,
     query,
-    onResetSearch,
 }: CatalogNumberQueryResultsProps) => {
     const subjectAreaCourses = Object.values(courses[subjectArea] ?? {});
 
@@ -31,7 +35,6 @@ const CatalogNumberQueryResults = ({
         <QueryResults
             data={subjectAreaCourses}
             query={query}
-            onResetSearch={onResetSearch}
             matcher={matchCourse}
             noResultsMessage="No courses found matching your query"
             renderResult={(row) => {

@@ -1,5 +1,6 @@
 import { CourseTitle } from "@/app/components/CourseTitle";
 import { Distribution } from "@/app/components/Distribution";
+import { ShareCourseButton } from "@/app/components/ShareCourseButton";
 import { Metadata } from "next";
 
 type Props = {
@@ -49,7 +50,10 @@ export default function Course({ params }: { params: { subjectArea: string, cata
                                     {catalogNumber}
                                 </a>
                             </div>
-                            <h1 className="flex-1 text-4xl mb-4 font-bold">{subjectArea} {catalogNumber}</h1>
+                            <h1 className="flex flex-1 text-4xl mb-4 font-bold items-center justify-center gap-4">
+                                {subjectArea} {catalogNumber}
+                                <ShareCourseButton subjectArea={subjectArea} catalogNumber={catalogNumber} />
+                            </h1>
                             <h2 className="flex-1 text-2xl">
                                 <CourseTitle subjectArea={subjectArea} catalogNumber={catalogNumber} />
                             </h2>
@@ -61,12 +65,20 @@ export default function Course({ params }: { params: { subjectArea: string, cata
                         <div className="w-full text-black bg-white shadow p-12">
                             <Distribution subjectArea={subjectArea} catalogNumber={catalogNumber} />
                         </div>
-                        <div className="mt-12">
+                        <div className="flex gap-12 mt-12">
                             <a
                                 className="text-md font-bold text-white border-white border-2 hover:opacity-50 p-4 rounded"
                                 href={`/?subjectArea=${rawSubjectArea}`}
                             >
-                                View More {subjectArea} Courses
+                                View more {subjectArea} courses
+                            </a>
+                            <a
+                                className="text-md font-bold text-white border-white border-2 hover:opacity-50 p-4 rounded"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfxHpdeTTvFzX4slKx-KGKgvqZM3GfABXIlHcuBHXiKhLhpwQ/viewform?usp=sf_link"
+                            >
+                                Report missing data
                             </a>
                         </div>
                     </div>

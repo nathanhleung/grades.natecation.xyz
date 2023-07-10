@@ -9,10 +9,10 @@ import { CatalogNumberQueryResults } from "./CatalogNumberQueryResults";
 import { SubjectAreaQueryResults } from "./SubjectAreaQueryResults";
 
 type SearchProps = {
-    onlyInput: boolean;
+    onlyInput?: boolean;
 }
 
-const Search = ({ onlyInput }: SearchProps) => {
+const Search = ({ onlyInput = false }: SearchProps) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -129,10 +129,6 @@ const Search = ({ onlyInput }: SearchProps) => {
                     <SubjectAreaQueryResults
                         courses={courses}
                         query={subjectAreaQuery}
-                        onResetSearch={() => {
-                            setSubjectAreaQuery('');
-                            subjectAreaQueryInputRef.current?.focus();
-                        }}
                         onSelectSubjectArea={(subjectArea) => {
                             setSelectedSubjectArea(subjectArea);
 
@@ -158,10 +154,6 @@ const Search = ({ onlyInput }: SearchProps) => {
                         courses={courses}
                         subjectArea={selectedSubjectArea}
                         query={catalogNumberQuery}
-                        onResetSearch={() => {
-                            setCatalogNumberQuery('');
-                            catalogNumberQueryInputRef.current?.focus();
-                        }}
                     />
                 </div>
             )}
