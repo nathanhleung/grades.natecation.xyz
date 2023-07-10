@@ -1,4 +1,5 @@
-import { useState, useEffect, cache } from "react";
+import { useEffect, useState } from "react";
+import { Response } from "../api/courses/route";
 
 /**
  * Gets a list of courses from the backend
@@ -7,13 +8,13 @@ import { useState, useEffect, cache } from "react";
  */
 async function getCourses() {
     const res = await fetch('/api/courses');
-    const json = await res.json();
+    const json: Response = await res.json();
     return json;
 }
 
 function useCourses() {
     const [loading, setLoading] = useState(true);
-    const [courses, setCourses] = useState<any[]>([]);
+    const [courses, setCourses] = useState<Response>();
 
     useEffect(() => {
         // TODO(nathanhleung) add date + cache expiration

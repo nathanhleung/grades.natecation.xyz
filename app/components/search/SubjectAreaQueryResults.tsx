@@ -1,3 +1,4 @@
+import { Response } from "@/app/api/courses/route";
 import { getSubjectAreaLongName } from "@/app/utils";
 import { QueryResults } from "./QueryResults";
 
@@ -39,7 +40,7 @@ function getSubjectAreaAliases(subjectArea: string) {
 }
 
 type SubjectAreaQueryResultsProps = {
-    courses: any;
+    courses: Response;
     /**
      * The subject area query
      */
@@ -129,4 +130,4 @@ const SubjectAreaQueryResults = ({
     );
 }
 
-export { SubjectAreaQueryResults }
+export { SubjectAreaQueryResults };

@@ -1,7 +1,12 @@
-import { NextResponse } from 'next/server'
-import fs from 'fs';
-import path from 'path';
-import { GENERATED_DATA_DIR } from '../constants';
+import untypedInstructorIndex from '@/app/generated/instructor-index.json';
+import { CourseRow } from '@/app/types';
+import { NextResponse } from 'next/server';
+
+type InstructorIndex = {
+    [instructorName: string]: CourseRow[]
+}
+
+const instructorIndex = untypedInstructorIndex as InstructorIndex;
 
 type CoursesByInstructor = {
     [instructor: string]: {
@@ -10,10 +15,6 @@ type CoursesByInstructor = {
 }
 
 export async function GET() {
-    const instructorIndex = JSON.parse(await fs.promises.readFile(
-        path.resolve(GENERATED_DATA_DIR, 'instructor-index.json'), 'utf-8'
-    ));
-
     const coursesByInstructor: CoursesByInstructor = {};
     const instructors = Object.keys(instructorIndex);
     for (const instructor of instructors) {

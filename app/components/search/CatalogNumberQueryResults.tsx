@@ -1,10 +1,14 @@
+import { Response } from "@/app/api/courses/route";
 import { QueryResults } from "./QueryResults";
-import Link from "next/link";
+
+function getSubjectAreaCourses(courses: Response, subjectArea: string) {
+    return Object.values(courses[subjectArea] ?? {});
+}
 
 function matchCourse(query: string) {
     const normalizedQuery = query.toLowerCase().trim();
 
-    return (row: any) => {
+    return (row: ReturnType<typeof getSubjectAreaCourses>[number]) => {
         return ({
             matches: row.catalogNumber.toLowerCase().indexOf(normalizedQuery) !== -1,
             score: 0,
@@ -13,7 +17,7 @@ function matchCourse(query: string) {
 }
 
 type CatalogNumberQueryResultsProps = {
-    courses: any;
+    courses: Response;
     /**
      * The subject area within which we are searching for courses
      */
@@ -29,7 +33,7 @@ const CatalogNumberQueryResults = ({
     subjectArea,
     query,
 }: CatalogNumberQueryResultsProps) => {
-    const subjectAreaCourses = Object.values(courses[subjectArea] ?? {});
+    const subjectAreaCourses = getSubjectAreaCourses(courses, subjectArea);
 
     return (
         <QueryResults
@@ -67,4 +71,4 @@ const CatalogNumberQueryResults = ({
     );
 }
 
-export { CatalogNumberQueryResults }
+export { CatalogNumberQueryResults };

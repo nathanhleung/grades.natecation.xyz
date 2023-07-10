@@ -1,16 +1,15 @@
 "use client";
 
 import 'chart.js/auto';
-import { ChartData } from 'chart.js/auto';
 import { groupBy, mapValues, maxBy, size, sum, sumBy } from 'lodash';
-import { get } from 'lodash/fp';
-import { useEffect, useState } from "react";
+import { compose, get } from 'lodash/fp';
+import React, { useEffect, useState } from "react";
 import { Bar } from 'react-chartjs-2';
 import Select from 'react-select';
+import { UCLA_BLUE_RGB } from '../constants';
 import useCourseData from '../hooks/useCourseData';
 import { compareGrades, getTermLongName } from "../utils";
 import { Loading } from './Loading';
-import { UCLA_BLUE_RGB } from '../constants';
 
 type DistributionProps = {
     subjectArea: string;
@@ -65,7 +64,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                         courseDataForInstructorNameForTermForGradeOffered => {
                             return sumBy(
                                 courseDataForInstructorNameForTermForGradeOffered,
-                                get('gradeCount')
+                                compose(Number, get('gradeCount'))
                             );
                         }
                     );
@@ -93,7 +92,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
         return compareGrades(a.x, b.x);
     });
 
-    const chartConfig: ChartData<"bar"> = {
+    const chartConfig: React.ComponentProps<typeof Bar>["data"] = {
         datasets: [{
             data: chartData,
             backgroundColor: `rgba(${UCLA_BLUE_RGB}, 0.4)`,

@@ -19,7 +19,7 @@ export default function Shoutouts() {
                         })}
                     </div>
                     <p>
-                        If you're on the list above and you'd like a link added to your name, please{" "}
+                        If you&apos;re on the list above and you&apos;d like a link added to your name, please{" "}
                         <a
                             href="https://docs.google.com/forms/d/e/1FAIpQLSfxHpdeTTvFzX4slKx-KGKgvqZM3GfABXIlHcuBHXiKhLhpwQ/viewform?usp=sf_link"
                             className="text-uclaBlue hover:opacity-50"

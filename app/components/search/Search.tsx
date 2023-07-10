@@ -44,7 +44,7 @@ const Search = ({ onlyInput = false }: SearchProps) => {
         (selectedSubjectArea === '')
     );
 
-    if (loading) {
+    if (loading || !courses) {
         return <Loading />
     }
 

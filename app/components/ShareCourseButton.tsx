@@ -13,18 +13,18 @@ type ShareCourseButtonProps = {
 const ShareCourseButton = ({ subjectArea, catalogNumber }: ShareCourseButtonProps) => {
     const [canShare, setCanShare] = useState(false);
 
-    useEffect(() => {
-        // Only works over HTTPS
-        if (navigator.canShare && navigator.canShare(shareData)) {
-            setCanShare(true);
-        }
-    }, [])
-
     const shareData = {
         title: `${subjectArea} ${catalogNumber} Grade Distribution`,
         text: `2021-22 grade distributions for ${subjectArea} ${catalogNumber}`,
         url: `${process.env.NEXT_PUBLIC_EXTERNAL_HOST}/${encodeURIComponent(subjectArea)}/${encodeURIComponent(catalogNumber)}`,
     }
+
+    useEffect(() => {
+        // Only works over HTTPS
+        if (navigator.canShare && navigator.canShare(shareData)) {
+            setCanShare(true);
+        }
+    }, [shareData]);
 
     if (!canShare) {
         return null;

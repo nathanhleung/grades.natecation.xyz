@@ -1,21 +1,30 @@
-import fs from 'fs';
+import untypedSubjectIndex from '@/app/generated/subject-index.json';
+import { CourseRow } from '@/app/types';
 import { mapValues, pick } from 'lodash';
 import { NextResponse } from 'next/server';
-import path from 'path';
-import { GENERATED_DATA_DIR } from '../constants';
+
+type SubjectIndex = {
+    [subjectArea: string]: {
+        [catalogNumber: string]: CourseRow[]
+    }
+}
+
+const subjectIndex = untypedSubjectIndex as SubjectIndex;
 
 type CatalogNumbersBySubjectArea = {
-    [subjectArea: string]: string[]
+    [subjectArea: string]: {
+        [catalogNumber: string]: {
+            courseTitle: string;
+            catalogNumber: string;
+            nRows: number;
+        }
+    }
 }
 
 /**
  * TODO(nathanhleung): cache this route (and others that can be cached)
  */
 export async function GET() {
-    const subjectIndex = JSON.parse(await fs.promises.readFile(
-        path.resolve(GENERATED_DATA_DIR, 'subject-index.json'), 'utf-8'
-    ));
-
     const catalogNumbersBySubjectArea: CatalogNumbersBySubjectArea = {};
     const subjectAreas = Object.keys(subjectIndex);
     for (const subjectArea of subjectAreas) {
@@ -30,3 +39,5 @@ export async function GET() {
 
     return NextResponse.json(catalogNumbersBySubjectArea);
 }
+
+export type Response = CatalogNumbersBySubjectArea;
