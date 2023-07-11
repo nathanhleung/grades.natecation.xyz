@@ -5,11 +5,11 @@ import { groupBy, last, mapValues, maxBy, size, sum, sumBy } from "lodash";
 import { compose, get } from "lodash/fp";
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import Select from "react-select";
 import { UCLA_BLUE_RGB } from "../constants";
 import useCourseData from "../hooks/useCourseData";
 import { compareGrades, getTermLongName } from "../utils";
 import { Loading } from "./Loading";
+import { Select } from './Select';
 
 type DistributionProps = {
     subjectArea: string;
@@ -113,91 +113,30 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                                 Instructor Name
                             </label>
                             <Select
-                                value={{
-                                    label: selectedInstructorName,
-                                    value: selectedInstructorName,
-                                }}
+                                value={selectedInstructorName}
                                 onChange={(newSelectedInstructorName) => {
                                     if (
-                                        newSelectedInstructorName !== null &&
-                                        newSelectedInstructorName.value !== selectedInstructorName
+                                        newSelectedInstructorName &&
+                                        newSelectedInstructorName !== selectedInstructorName
                                     ) {
-                                        setSelectedInstructorName(newSelectedInstructorName.value);
+                                        setSelectedInstructorName(newSelectedInstructorName);
                                         setSelectedTerm("");
                                     }
                                 }}
-                                options={instructorNames.map((instructorName) => ({
-                                    value: instructorName,
-                                    label: instructorName,
-                                }))}
-                                styles={{
-                                    control(base, props) {
-                                        return {
-                                            ...base,
-                                            boxShadow: "none",
-                                            borderWidth: "2px",
-                                            borderColor: props.isFocused
-                                                ? `rgb(${UCLA_BLUE_RGB})`
-                                                : "none",
-                                            ":hover": {
-                                                borderColor: `rgb(${UCLA_BLUE_RGB})`,
-                                            },
-                                        };
-                                    },
-                                    option(base, props) {
-                                        return {
-                                            ...base,
-                                            color: props.isFocused ? "white" : "black",
-                                            background: props.isFocused
-                                                ? `rgb(${UCLA_BLUE_RGB})`
-                                                : "white",
-                                        };
-                                    },
-                                }}
+                                options={instructorNames}
                             />
                         </div>
                         <div className="flex-1">
                             <label className="block mb-1 text-sm font-bold">Term</label>
                             <Select
-                                value={{
-                                    label: getTermLongName(selectedTerm),
-                                    value: selectedTerm,
-                                }}
+                                value={selectedTerm}
+                                getLabel={getTermLongName}
                                 onChange={(newSelectedTerm) => {
-                                    if (newSelectedTerm !== null) {
-                                        setSelectedTerm(newSelectedTerm.value);
+                                    if (newSelectedTerm) {
+                                        setSelectedTerm(newSelectedTerm);
                                     }
                                 }}
-                                options={instructorTerms.map((instructorTerm) => ({
-                                    value: instructorTerm,
-                                    label: getTermLongName(instructorTerm),
-                                }))}
-                                styles={{
-                                    control(base, props) {
-                                        return {
-                                            ...base,
-                                            boxShadow: "none",
-                                            borderWidth: "2px",
-                                            borderColor: props.isFocused
-                                                ? `rgb(${UCLA_BLUE_RGB})`
-                                                : "none",
-                                            ":hover": {
-                                                borderColor: `rgb(${UCLA_BLUE_RGB})`,
-                                            },
-                                        };
-                                    },
-                                    option(base, props) {
-                                        return {
-                                            ...base,
-                                            color:
-                                                props.isFocused || props.isSelected ? "white" : "black",
-                                            background:
-                                                props.isFocused || props.isSelected
-                                                    ? `rgb(${UCLA_BLUE_RGB})`
-                                                    : "white",
-                                        };
-                                    },
-                                }}
+                                options={instructorTerms}
                             />
                         </div>
                     </div>

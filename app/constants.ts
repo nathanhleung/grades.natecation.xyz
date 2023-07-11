@@ -1,4 +1,8 @@
 export const UCLA_BLUE_RGB = "39, 116, 174";
+export const UCLA_DARKER_BLUE_RGB = "0, 85, 135";
+export const UCLA_LIGHTER_BLUE_RGB = "139, 184, 232";
+export const UCLA_LIGHTEST_BLUE_RGB = "218, 235, 254";
+
 export const DONORS = [
   "James Chen",
   "Ashley Sun",
