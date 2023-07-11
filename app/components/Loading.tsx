@@ -10,7 +10,7 @@ type LoadingProps = {
    * Additional classes to add to the container
    */
   className?: string;
-}
+};
 
 const Loading = ({ noLayoutStyles = false, className = "" }: LoadingProps) => {
   const [dotCount, setDotCount] = useState(3);
@@ -29,13 +29,13 @@ const Loading = ({ noLayoutStyles = false, className = "" }: LoadingProps) => {
     <div
       className={classNames(
         !noLayoutStyles && "flex justify-center w-full",
-        className
+        className,
       )}
     >
       <h1
         className={classNames(
           "text-2xl opacity-25 font-bold",
-          !noLayoutStyles && "text-left w-44 p-6"
+          !noLayoutStyles && "text-left w-44 p-6",
         )}
       >
         Loading
@@ -43,7 +43,7 @@ const Loading = ({ noLayoutStyles = false, className = "" }: LoadingProps) => {
         {/* &nbsp; */}
         {" ".repeat(3 - dotCount)}
       </h1>
-    </div >
+    </div>
   );
 };
 

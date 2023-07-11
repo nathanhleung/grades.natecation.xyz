@@ -1,6 +1,5 @@
 import { Response } from "@/app/api/courses/route";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Loading } from "../Loading";
 import { QueryResults } from "./QueryResults";
 
@@ -60,12 +59,10 @@ const CatalogNumberQueryResults = ({
       data={subjectAreaCourses}
       query={query}
       matcher={matchCourse}
-      keyExtractor={it => it.catalogNumber}
+      keyExtractor={(it) => it.catalogNumber}
       noResultsMessage="No courses found matching your query"
       renderResult={(row) => {
-        return (
-          <Result courses={courses} subjectArea={subjectArea} row={row} />
-        );
+        return <Result courses={courses} subjectArea={subjectArea} row={row} />;
       }}
     />
   );
@@ -74,8 +71,8 @@ const CatalogNumberQueryResults = ({
 type ResultProps = {
   courses: Response;
   subjectArea: string;
-  row: ReturnType<typeof getSubjectAreaCourses>[number]
-}
+  row: ReturnType<typeof getSubjectAreaCourses>[number];
+};
 
 const Result = ({ courses, subjectArea, row }: ResultProps) => {
   const [clicked, setClicked] = useState(false);
@@ -121,7 +118,7 @@ const Result = ({ courses, subjectArea, row }: ResultProps) => {
         </div>
       </div>
     </a>
-  )
-}
+  );
+};
 
 export { CatalogNumberQueryResults };
