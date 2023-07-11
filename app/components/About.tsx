@@ -38,7 +38,14 @@ const About = () => {
       >
         on Google Drive
       </a>{" "}
-      (log into your UCLA Google Account to access).
+      (log into your UCLA Google Account to access). Source code for this site is <a
+        href="https://github.com/nathanhleung/grades.natecation.xyz"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-uclaBlue hover:opacity-50"
+      >
+        on GitHub
+      </a>; contributions are welcome and appreciated.
     </p>
   );
 };

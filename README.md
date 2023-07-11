@@ -1,22 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# [UCLA Grade Distributions 2021-22](https://grades.natecation.xyz/)
+
+This website displays [grade distribution data from Fall 2021, Winter 2022, Spring 2022, and Summer 2022](https://grades.natecation.xyz/), brought to you by [40+ UCLA students](https://grades.natecation.xyz/shoutouts).
+
+This site is not affiliated with UCLA. Grade distribution data was sourced through a February 2023 [public records request](https://drive.google.com/file/d/1l-R7LN9jOFUic3b4WTk4WxfDSjGNpuVw/view?usp=sharing) made under the California Public Records Act. [40+](https://grades.natecation.xyz/shoutouts) UCLA students [paid $131.25](https://drive.google.com/file/d/14LuoYaDCPUmts_6igA8rC3AVI2Ntyvqc/view?usp=sharing) to obtain these records.
+
+UCLA students can download the data [on Google Drive](https://drive.google.com/file/d/14LuoYaDCPUmts_6igA8rC3AVI2Ntyvqc/view?usp=sharing) (log into your UCLA Google Account to access).
+
+This repository contains the full source code for the website; contributions are welcome and appreciated.
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
 
 ```bash
-npm run dev
-# or
+yarn install
+```
+
+Then, run the development server:
+
+```bash
 yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Learn More
 
@@ -29,6 +37,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The app is deployed on Vercel and available at https://grades.natecation.xyz/.

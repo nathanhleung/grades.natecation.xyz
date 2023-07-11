@@ -111,7 +111,17 @@ export default function About() {
           </a>
           <p>
             This website was developed over the course of a few weeks in late
-            June and early July, and the grade distribution data is now{" "}
+            June and early July. Source code for this site is <a
+              href="https://github.com/nathanhleung/grades.natecation.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-uclaBlue hover:opacity-50"
+            >
+              on GitHub
+            </a>; contributions are welcome and appreciated.
+            <br />
+            <br />
+            The grade distribution data is{" "}
             <a
               href="https://docs.google.com/spreadsheets/u/1/d/1kF7eK8Iyyv_LnE2IY9vg2VEuDuoYi5qO/edit?usp=sharing&ouid=105052985987772221837&rtpof=true&sd=true"
               target="_blank"
