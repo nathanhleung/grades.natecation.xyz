@@ -1,4 +1,4 @@
-# [UCLA Grade Distributions 2021-22](https://grades.natecation.xyz/)
+# 📊 [UCLA Grade Distributions 2021-22](https://grades.natecation.xyz/)
 
 This website displays [grade distribution data from Fall 2021, Winter 2022, Spring 2022, and Summer 2022](https://grades.natecation.xyz/), brought to you by [40+ UCLA students](https://grades.natecation.xyz/shoutouts).
 
