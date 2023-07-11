@@ -62,6 +62,7 @@ const Select = ({ value, getLabel = identity, onChange, options, ...restProps }:
 
     return (
         <ReactSelect
+            isSearchable={false}
             value={selectValue}
             onChange={(newSelectValue) => {
                 if (

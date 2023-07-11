@@ -82,9 +82,9 @@ const Search = ({ onlyInput = false }: SearchProps) => {
                             subjectAreaQueryInputRef.current?.select();
 
                             if (pathname === "/") {
-                                router.push(pathname, {
-                                    scroll: false,
-                                });
+                                const url = new URL(window.location.href);
+                                url.searchParams.delete("subjectArea")
+                                history.pushState({}, "", url);
                             }
                         }
                     }}
@@ -111,9 +111,9 @@ const Search = ({ onlyInput = false }: SearchProps) => {
                                 subjectAreaQueryInputRef.current?.focus();
 
                                 if (pathname === "/") {
-                                    router.push(pathname, {
-                                        scroll: false,
-                                    });
+                                    const url = new URL(window.location.href);
+                                    url.searchParams.delete("subjectArea")
+                                    history.pushState({}, "", url);
                                 }
                             }
                         }}
@@ -129,9 +129,9 @@ const Search = ({ onlyInput = false }: SearchProps) => {
                             setSelectedSubjectArea(subjectArea);
 
                             if (pathname === "/") {
-                                router.push(`${pathname}?subjectArea=${subjectArea}`, {
-                                    scroll: false,
-                                });
+                                const url = new URL(window.location.href);
+                                url.searchParams.set("subjectArea", subjectArea)
+                                history.pushState({}, "", url);
                             }
 
                             // Wait until next tick to ensure component is mounted
