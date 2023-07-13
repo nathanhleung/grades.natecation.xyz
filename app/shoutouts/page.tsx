@@ -12,7 +12,7 @@ export default function Shoutouts() {
             Thank you to the following individuals who contributed funds in
             order to get these grade distributions:
           </p>
-          <div className="bg-uclaGold p-12 my-8 grid grid-cols-3 gap-3">
+          <div className="text-left bg-uclaGold p-12 my-8 grid grid-cols-2 md:grid-cols-3 gap-3 gap-x-6">
             {DONORS.map((donor) => {
               return (
                 <div key={donor}>
