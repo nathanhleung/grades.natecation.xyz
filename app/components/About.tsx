@@ -45,7 +45,16 @@ const About = () => {
         className="text-uclaBlue hover:opacity-50"
       >
         on GitHub
-      </a>; contributions are welcome and appreciated.
+      </a>; contributions are welcome and appreciated. Questions,{" "}
+      comments, bug reports, and feature requests are welcome{" "}
+      <a
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfxHpdeTTvFzX4slKx-KGKgvqZM3GfABXIlHcuBHXiKhLhpwQ/viewform"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-uclaBlue hover:opacity-50"
+      >
+        at this link
+      </a>.
     </p>
   );
 };
