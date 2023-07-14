@@ -1,7 +1,8 @@
 import { About } from "./components/About";
-import "./globals.css";
-import { Navbar } from "./components/Navbar";
+import { GoogleAnalytics } from "./components/GoogleAnalytics";
 import { MobileNavbar } from "./components/MobileNavbar";
+import { Navbar } from "./components/Navbar";
+import "./globals.css";
 
 export const metadata = {
   title: {
@@ -19,6 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body className="flex flex-col min-h-screen border-b-uclaBlue border-b-[12px]">
         <div className="hidden md:block">
           <Navbar />
