@@ -10,6 +10,7 @@ import useCourseData from "../hooks/useCourseData";
 import { compareGrades, getTermLongName } from "../utils";
 import { Loading } from "./Loading";
 import { Select } from "./Select";
+import { callback } from "chart.js/dist/helpers/helpers.core";
 
 type DistributionProps = {
   subjectArea: string;
@@ -81,9 +82,12 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
 
   const gradeCountsForInstructorNameForTerm =
     gradeCountsByInstructorNameByTerm?.[selectedInstructorName]?.[selectedTerm];
+  const gradeCountArray = Object.values(gradeCountsForInstructorNameForTerm ?? {});
   const totalGradeCountForInstructorNameForTerm = sum(
-    Object.values(gradeCountsForInstructorNameForTerm ?? {}).map(Number),
+    gradeCountArray.map(Number),
   );
+
+  const maxGradeCount = Math.max(...gradeCountArray);
 
   const chartData = Object.keys(gradeCountsForInstructorNameForTerm ?? {})
     .map((gradeOffered) => ({
@@ -150,10 +154,20 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                 legend: {
                   display: false,
                 },
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const value = context.parsed.y;
+                    const pct = ((Number(value) / totalGradeCountForInstructorNameForTerm) * 100).toFixed(1);
+                    return `${value} (${pct}%)`
+                  }
+                }
+              }
               },
               scales: {
                 y: {
                   ticks: {
+                    count: 7,
                     callback: (value) => {
                       const decimal =
                         Number(value) / totalGradeCountForInstructorNameForTerm;
@@ -161,7 +175,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                     },
                   },
                   min: 0,
-                  max: totalGradeCountForInstructorNameForTerm,
+                  max: Math.min((15/14) * maxGradeCount, totalGradeCountForInstructorNameForTerm),
                 },
               },
             }}
