@@ -19,7 +19,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between w-full bg-uclaBlue text-white p-2">
+      <div className="flex items-center justify-between w-full bg-uclaBlue text-white p-3 lg:py-2">
         <div className="flex items-center gap-12">
           <Link href="/" className="font-bold hover:opacity-50">
             grades.natecation.xyz
@@ -38,7 +38,7 @@ const Navbar = () => {
           >
             Contact
           </a>
-          <div className="rounded pl-4 pr-8 py-1 bg-white text-black cursor-text">
+          <div className="rounded pl-4 pr-8 py-1 bg-white text-black cursor-text hidden lg:block">
             <div
               className="flex items-center font-bold opacity-50 gap-4"
               onClick={() => setSearchModalOpen(true)}
