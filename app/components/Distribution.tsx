@@ -81,9 +81,10 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
 
   const gradeCountsForInstructorNameForTerm =
     gradeCountsByInstructorNameByTerm?.[selectedInstructorName]?.[selectedTerm];
-  const totalGradeCountForInstructorNameForTerm = sum(
-    Object.values(gradeCountsForInstructorNameForTerm ?? {}).map(Number),
-  );
+  const gradeCountArray = Object.values(gradeCountsForInstructorNameForTerm ?? {});
+  const totalGradeCountForInstructorNameForTerm = sum(gradeCountArray);
+
+  const maxGradeCount = Math.max(...gradeCountArray);
 
   const chartData = Object.keys(gradeCountsForInstructorNameForTerm ?? {})
     .map((gradeOffered) => ({
@@ -150,10 +151,20 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                 legend: {
                   display: false,
                 },
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const value = context.parsed.y;
+                    const pct = ((Number(value) / totalGradeCountForInstructorNameForTerm) * 100).toFixed(1);
+                    return `${value} (${pct}%)`
+                  }
+                }
+              }
               },
               scales: {
                 y: {
                   ticks: {
+                    count: 7,
                     callback: (value) => {
                       const decimal =
                         Number(value) / totalGradeCountForInstructorNameForTerm;
@@ -161,7 +172,8 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                     },
                   },
                   min: 0,
-                  max: totalGradeCountForInstructorNameForTerm,
+                  max: Math.min((15/14) * maxGradeCount, totalGradeCountForInstructorNameForTerm),
+                  //if one letter grade makes up over ~93% of total count keep 100% as the max; otherwise leave top-margin of 1/14th of max letter grade count for a cleaner chart layout
                 },
               },
             }}
