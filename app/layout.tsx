@@ -24,11 +24,13 @@ export default function RootLayout({
         <GoogleAnalytics />
       </head>
       <body className="flex flex-col min-h-screen border-b-uclaBlue border-b-[12px]">
-        <div className="hidden md:block">
-          <Navbar />
-        </div>
-        <div className="md:hidden">
-          <MobileNavbar />
+        <div className="sticky top-0">
+          <div className="hidden md:block">
+            <Navbar />
+          </div>
+          <div className="md:hidden">
+            <MobileNavbar />
+          </div>
         </div>
         <div className="flex flex-1">{children}</div>
         <div className="flex flex-col text-center p-6 sm:p-12 md:p-16 md:w-[85%] lg:w-[60%] md:mx-auto justify-center">

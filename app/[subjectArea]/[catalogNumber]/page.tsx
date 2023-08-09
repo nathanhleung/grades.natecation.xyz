@@ -19,9 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function Course({
   params,
-}: {
-  params: { subjectArea: string; catalogNumber: string };
-}) {
+}: Props) {
   const { subjectArea: rawSubjectArea, catalogNumber: rawCatalogNumber } =
     params;
   const subjectArea = decodeURIComponent(rawSubjectArea);

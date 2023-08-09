@@ -10,6 +10,9 @@ const MobileNavbar = () => {
         <Link href="/" className="font-semibold hover:opacity-50">
           Home
         </Link>
+        <Link href="/summary" className="font-semibold hover:opacity-50">
+          Summary
+        </Link>
         <Link href="/about" className="font-semibold hover:opacity-50">
           About
         </Link>

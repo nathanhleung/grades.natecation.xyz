@@ -30,6 +30,9 @@ const Navbar = () => {
           <Link href="/about" className="font-semibold hover:opacity-50">
             About
           </Link>
+          <Link href="/summary" className="font-semibold hover:opacity-50">
+            Summary
+          </Link>
           <a
             target="blank"
             rel="noopener noreferrer"
