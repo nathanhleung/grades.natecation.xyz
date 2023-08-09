@@ -10,7 +10,6 @@ import useCourseData from "../hooks/useCourseData";
 import { compareGrades, getTermLongName } from "../utils";
 import { Loading } from "./Loading";
 import { Select } from "./Select";
-import { callback } from "chart.js/dist/helpers/helpers.core";
 
 type DistributionProps = {
   subjectArea: string;
@@ -83,9 +82,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
   const gradeCountsForInstructorNameForTerm =
     gradeCountsByInstructorNameByTerm?.[selectedInstructorName]?.[selectedTerm];
   const gradeCountArray = Object.values(gradeCountsForInstructorNameForTerm ?? {});
-  const totalGradeCountForInstructorNameForTerm = sum(
-    gradeCountArray.map(Number),
-  );
+  const totalGradeCountForInstructorNameForTerm = sum(gradeCountArray);
 
   const maxGradeCount = Math.max(...gradeCountArray);
 
@@ -176,6 +173,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                   },
                   min: 0,
                   max: Math.min((15/14) * maxGradeCount, totalGradeCountForInstructorNameForTerm),
+                  //if one letter grade makes up over ~93% of total count keep 100% as the max; otherwise leave top-margin of 1/14th of max letter grade count for a cleaner chart layout
                 },
               },
             }}
