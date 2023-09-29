@@ -81,7 +81,9 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
 
   const gradeCountsForInstructorNameForTerm =
     gradeCountsByInstructorNameByTerm?.[selectedInstructorName]?.[selectedTerm];
-  const gradeCountArray = Object.values(gradeCountsForInstructorNameForTerm ?? {});
+  const gradeCountArray = Object.values(
+    gradeCountsForInstructorNameForTerm ?? {},
+  );
   const totalGradeCountForInstructorNameForTerm = sum(gradeCountArray);
   const maxGradeCount = Math.max(...gradeCountArray);
 
@@ -155,11 +157,12 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                     label: (context) => {
                       const gradeCount = context.parsed.y;
                       const percentageOfTotal =
-                        (gradeCount / totalGradeCountForInstructorNameForTerm) * 100;
-                      return `${gradeCount} (${percentageOfTotal.toFixed(1)}%)`
-                    }
-                  }
-                }
+                        (gradeCount / totalGradeCountForInstructorNameForTerm) *
+                        100;
+                      return `${gradeCount} (${percentageOfTotal.toFixed(1)}%)`;
+                    },
+                  },
+                },
               },
               scales: {
                 y: {
@@ -177,7 +180,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                   // of the max single letter grade count for more spacing on top.
                   max: Math.min(
                     (15 / 14) * maxGradeCount,
-                    totalGradeCountForInstructorNameForTerm
+                    totalGradeCountForInstructorNameForTerm,
                   ),
                 },
               },

@@ -1,4 +1,35 @@
-import { DONORS } from "../constants";
+import { DONORS_21F_222, DONORS_22F_23S, Donors } from "../constants";
+
+type DonorsListProps = {
+  heading: string;
+  donors: Donors;
+};
+
+const DonorsList = ({ heading, donors }: DonorsListProps) => {
+  return (
+    <div className="bg-uclaGold p-12 my-8">
+      <h2 className="text-2xl font-bold mb-4">{heading}</h2>
+      <div className="text-left grid grid-cols-2 md:grid-cols-3 gap-3 gap-x-6">
+        {donors.map((donor) => {
+          const donorName = Array.isArray(donor) ? donor[0] : donor;
+          const donorLink = Array.isArray(donor) ? donor[1] : undefined;
+
+          return (
+            <div key={donorName}>
+              {donorLink ? (
+                <a className="underline hover:opacity-50" href={donorLink}>
+                  <p>{donorName}</p>
+                </a>
+              ) : (
+                <p>{donorName}</p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 export default function Shoutouts() {
   return (
@@ -10,17 +41,10 @@ export default function Shoutouts() {
         <div className="text-justify">
           <p>
             Thank you to the following individuals who contributed funds in
-            order to get these grade distributions:
+            order to get the grade distributions on this site:
           </p>
-          <div className="text-left bg-uclaGold p-12 my-8 grid grid-cols-2 md:grid-cols-3 gap-3 gap-x-6">
-            {DONORS.map((donor) => {
-              return (
-                <div key={donor}>
-                  <p>{donor}</p>
-                </div>
-              );
-            })}
-          </div>
+          <DonorsList heading="2022–23" donors={DONORS_22F_23S} />
+          <DonorsList heading="2021–22" donors={DONORS_21F_222} />
           <p>
             If you&apos;re on the list above and you&apos;d like a link added to
             your name, please{" "}

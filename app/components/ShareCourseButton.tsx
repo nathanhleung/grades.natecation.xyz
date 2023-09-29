@@ -18,7 +18,7 @@ const ShareCourseButton = ({
 
   const shareData = {
     title: `${subjectArea} ${catalogNumber} Grade Distribution`,
-    text: `2021-22 grade distributions for ${subjectArea} ${catalogNumber}`,
+    text: `2021-23 grade distributions for ${subjectArea} ${catalogNumber}`,
     url: `${process.env.NEXT_PUBLIC_EXTERNAL_HOST}/${encodeURIComponent(
       subjectArea,
     )}/${encodeURIComponent(catalogNumber)}`,

@@ -5,8 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { DONORS } from "../constants";
+import { DONORS_21F_222, DONORS_22F_23S } from "../constants";
 import { Search } from "./search";
+
+const ALL_DONORS = [...DONORS_21F_222, ...DONORS_22F_23S];
 
 const Navbar = () => {
   const [randomDonor, setRandomDonor] = useState("");
@@ -14,12 +16,12 @@ const Navbar = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    setRandomDonor(sample(DONORS) ?? "");
+    setRandomDonor(sample(ALL_DONORS)?.[0] ?? "");
   }, [pathname]);
 
   return (
     <>
-      <div className="flex items-center justify-between w-full bg-uclaBlue text-white p-3 lg:py-2">
+      <div className="flex items-center justify-between w-full bg-uclaBlue text-white p-3 lg:py-2 select-none">
         <div className="flex items-center gap-12">
           <Link href="/" className="font-bold hover:opacity-50">
             grades.natecation.xyz

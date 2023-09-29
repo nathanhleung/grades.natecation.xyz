@@ -7,6 +7,27 @@ export default function About() {
         <h1 className="text-4xl text-center mb-6 text-black font-bold">
           About
         </h1>
+        <div className="bg-gray-100 p-12 my-8 italic">
+          Log into your UCLA Google Account and download the raw grade
+          distribution data here:{" "}
+          <a
+            href="https://docs.google.com/spreadsheets/d/1kF7eK8Iyyv_LnE2IY9vg2VEuDuoYi5qO/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-uclaBlue hover:opacity-50"
+          >
+            Fall 2021–Summer 2022
+          </a>
+          ,{" "}
+          <a
+            href="https://docs.google.com/spreadsheets/d/1QTdQIRb1YvJ91zPkwaPTmxzRuy8GK_YN/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-uclaBlue hover:opacity-50"
+          >
+            Fall 2022–Spring 2023
+          </a>
+        </div>
         <div className="text-justify">
           <p>
             On February 15th, 2023, I sent a{" "}
@@ -18,7 +39,7 @@ export default function About() {
             >
               California Public Records Act request to UCLA
             </a>{" "}
-            for 2021-22 grade distributions.
+            for 2021–22 grade distributions.
           </p>
           <a
             href="https://drive.google.com/file/d/1l-R7LN9jOFUic3b4WTk4WxfDSjGNpuVw/view?usp=sharing"
@@ -111,27 +132,38 @@ export default function About() {
           </a>
           <p>
             This website was developed over the course of a few weeks in late
-            June and early July. Source code for this site is <a
+            June and early July. Source code for this site is{" "}
+            <a
               href="https://github.com/nathanhleung/grades.natecation.xyz"
               target="_blank"
               rel="noopener noreferrer"
               className="text-uclaBlue hover:opacity-50"
             >
               on GitHub
-            </a>; contributions are welcome and appreciated.
+            </a>
+            ; contributions are welcome and appreciated.
             <br />
             <br />
-            The grade distribution data is{" "}
+            The grade distribution data is available for UCLA students to
+            download on the UCLA Google Drive (log into your UCLA Google Account
+            to access):{" "}
             <a
-              href="https://docs.google.com/spreadsheets/u/1/d/1kF7eK8Iyyv_LnE2IY9vg2VEuDuoYi5qO/edit?usp=sharing&ouid=105052985987772221837&rtpof=true&sd=true"
+              href="https://docs.google.com/spreadsheets/d/1kF7eK8Iyyv_LnE2IY9vg2VEuDuoYi5qO/edit?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="text-uclaBlue hover:opacity-50"
             >
-              available for UCLA students to download
-            </a>{" "}
-            on the UCLA Google Drive (log into your UCLA Google Account to
-            access).
+              Fall 2021–Summer 2022
+            </a>
+            ,{" "}
+            <a
+              href="https://docs.google.com/spreadsheets/d/1QTdQIRb1YvJ91zPkwaPTmxzRuy8GK_YN/edit?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-uclaBlue hover:opacity-50"
+            >
+              Fall 2022–Spring 2023
+            </a>
           </p>
           <a
             href="https://docs.google.com/spreadsheets/u/1/d/1kF7eK8Iyyv_LnE2IY9vg2VEuDuoYi5qO/edit?usp=sharing&ouid=105052985987772221837&rtpof=true&sd=true"

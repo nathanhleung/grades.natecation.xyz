@@ -3,8 +3,8 @@ import Link from "next/link";
 const About = () => {
   return (
     <p className="text-gray-400 text-sm italic text-justify">
-      This website is not affiliated with UCLA. Grade distribution data was
-      sourced through a February 2023{" "}
+      This website is not affiliated with UCLA. Grade distribution data from
+      2021–2022 was sourced through a February 2023{" "}
       <a
         target="_blank"
         rel="noreferrer"
@@ -26,27 +26,42 @@ const About = () => {
       >
         paid $131.25
       </a>{" "}
-      to obtain these records.
+      to obtain these records. Grade distribution data from 2022–2023 was
+      sourced similarly.
       <br />
       <br />
-      UCLA students can download the data{" "}
+      UCLA students can download the data on Google Drive (log into your UCLA
+      Google Account to access):{" "}
       <a
-        className="text-uclaBlue hover:opacity-50"
+        href="https://docs.google.com/spreadsheets/d/1kF7eK8Iyyv_LnE2IY9vg2VEuDuoYi5qO/edit?usp=sharing"
         target="_blank"
-        rel="noreferrer"
-        href="https://docs.google.com/spreadsheets/d/1kF7eK8Iyyv_LnE2IY9vg2VEuDuoYi5qO/edit?usp=sharing&ouid=105052985987772221837&rtpof=true&sd=true"
+        rel="noopener noreferrer"
+        className="text-uclaBlue hover:opacity-50"
       >
-        on Google Drive
-      </a>{" "}
-      (log into your UCLA Google Account to access). Source code for this site is <a
+        Fall 2021–Summer 2022
+      </a>
+      ,{" "}
+      <a
+        href="https://docs.google.com/spreadsheets/d/1QTdQIRb1YvJ91zPkwaPTmxzRuy8GK_YN/edit?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-uclaBlue hover:opacity-50"
+      >
+        Fall 2022–Spring 2023
+      </a>
+      <br />
+      <br />
+      Source code for this site is{" "}
+      <a
         href="https://github.com/nathanhleung/grades.natecation.xyz"
         target="_blank"
         rel="noopener noreferrer"
         className="text-uclaBlue hover:opacity-50"
       >
         on GitHub
-      </a>; contributions are welcome and appreciated. Questions,{" "}
-      comments, bug reports, and feature requests are welcome{" "}
+      </a>
+      ; contributions are welcome and appreciated. Questions, comments, bug
+      reports, and feature requests are welcome{" "}
       <a
         href="https://docs.google.com/forms/d/e/1FAIpQLSfxHpdeTTvFzX4slKx-KGKgvqZM3GfABXIlHcuBHXiKhLhpwQ/viewform"
         target="_blank"
@@ -54,7 +69,8 @@ const About = () => {
         className="text-uclaBlue hover:opacity-50"
       >
         at this link
-      </a>.
+      </a>
+      .
     </p>
   );
 };

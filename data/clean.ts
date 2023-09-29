@@ -2,6 +2,7 @@ import * as csv from "csv";
 import fs from "fs";
 import { mkdirp } from "mkdirp";
 import path from "path";
+import MultiStream from "multistream";
 
 type RawRow = {
   "ENROLLMENT TERM": string;
@@ -53,8 +54,15 @@ async function parseAndIndexGrades(): Promise<
   const instructorIndex: InstructorIndex = {};
   const subjectIndex: SubjectIndex = {};
 
-  const parser = fs
-    .createReadStream(path.resolve(__dirname, "grades.csv"))
+  const streams = [
+    "header.csv",
+    "grades-21f-222.csv",
+    "grades-22f-23s.csv",
+  ].map(
+    (filename) => () => fs.createReadStream(path.resolve(__dirname, filename)),
+  );
+
+  const parser = new MultiStream(streams)
     .pipe(csv.parse({ columns: true }))
     .on("data", (rawRow: RawRow) => {
       const row = {
@@ -86,7 +94,11 @@ async function parseAndIndexGrades(): Promise<
       subjectIndex[subjectArea][catalogNumber].push(row);
     });
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+    parser.on("error", (err) => {
+      reject(err);
+    });
+
     parser.on("end", () => {
       resolve([rows, instructorIndex, subjectIndex]);
     });
@@ -124,4 +136,11 @@ async function main() {
   console.info("Wrote files to app/generated!");
 }
 
-main();
+main()
+  .then(() => {
+    console.log("Completed successfully!");
+  })
+  .catch((err) => {
+    console.error("An error occurred.");
+    console.error(err);
+  });
