@@ -1,3 +1,4 @@
+import { addDays, isBefore } from "date-fns";
 import { useEffect, useState } from "react";
 import { Response } from "../api/courses/route";
 
@@ -17,9 +18,13 @@ function useCourses() {
   const [courses, setCourses] = useState<Response>();
 
   useEffect(() => {
-    // TODO(nathanhleung) add date + cache expiration
     const cachedCourses = window.localStorage.getItem("courses");
-    if (cachedCourses) {
+    const cachedCoursesExpiration = new Date(
+      window.localStorage.getItem("courses-expiration") ?? 0,
+    );
+    const now = new Date();
+
+    if (cachedCourses && isBefore(now, cachedCoursesExpiration)) {
       setCourses(JSON.parse(cachedCourses) as any);
       setLoading(false);
     } else {
@@ -27,6 +32,10 @@ function useCourses() {
         .then((json) => {
           setCourses(json);
           window.localStorage.setItem("courses", JSON.stringify(json));
+          window.localStorage.setItem(
+            "courses-expiration",
+            addDays(now, 1).toISOString(),
+          );
         })
         .finally(() => {
           setLoading(false);

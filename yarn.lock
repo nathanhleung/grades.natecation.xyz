@@ -63,7 +63,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
   version: 7.23.1
   resolution: "@babel/runtime@npm:7.23.1"
   dependencies:
@@ -1387,6 +1387,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns@npm:^2.30.0":
+  version: 2.30.0
+  resolution: "date-fns@npm:2.30.0"
+  dependencies:
+    "@babel/runtime": ^7.21.0
+  checksum: f7be01523282e9bb06c0cd2693d34f245247a29098527d4420628966a2d9aad154bd0e90a6b1cf66d37adcb769cd108cf8a7bd49d76db0fb119af5cdd13644f4
+  languageName: node
+  linkType: hard
+
 "debug@npm:4, debug@npm:^4.1.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
@@ -2367,6 +2376,7 @@ __metadata:
     chart.js: ^4.4.0
     classnames: ^2.3.2
     csv: ^6.3.3
+    date-fns: ^2.30.0
     eslint: 8.50.0
     eslint-config-next: 13.5.3
     eslint-config-prettier: ^8.8.0

@@ -17,6 +17,7 @@
     "chart.js": "^4.4.0",
     "classnames": "^2.3.2",
     "csv": "^6.3.3",
+    "date-fns": "^2.30.0",
     "eslint": "8.50.0",
     "eslint-config-next": "13.5.3",
     "lodash": "^4.17.21",
