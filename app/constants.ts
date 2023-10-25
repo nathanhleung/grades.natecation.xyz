@@ -11,7 +11,7 @@ export const DONORS_21F_222: Donors = [
   ["Mark Gross", undefined],
   ["William Yao", undefined],
   ["Olive Long", undefined],
-  ["Allison Li", undefined],
+  ["Anonymous", undefined],
   ["Tian Ouyang", undefined],
   ["Sammy Fesili", undefined],
   ["Khang Nguyen Le Tuan", undefined],
