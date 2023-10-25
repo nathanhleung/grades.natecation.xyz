@@ -601,12 +601,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-modal@npm:^3.16.1":
-  version: 3.16.1
-  resolution: "@types/react-modal@npm:3.16.1"
+"@types/react-modal@npm:^3.16.2":
+  version: 3.16.2
+  resolution: "@types/react-modal@npm:3.16.2"
   dependencies:
     "@types/react": "*"
-  checksum: f58f26342d7a9ddddfd5716d8e518c422dd5bc63006387be0b6aac2bdca54238bba2afe3b41767aa0e803f7f2677581535236563bd4d6d28d97f0d0a68a8fc7d
+  checksum: b54956485dd1da9ccd3667d59f5164669d5d621f7087758a2fd02f5b4bcac0f286734b66302bf38d86479f70c7d1591762ff15323b1687c605ea2825e356be08
   languageName: node
   linkType: hard
 
@@ -2371,7 +2371,7 @@ __metadata:
     "@types/node": ^20.3.1
     "@types/react": 18.2.23
     "@types/react-dom": 18.2.8
-    "@types/react-modal": ^3.16.1
+    "@types/react-modal": ^3.16.2
     autoprefixer: 10.4.16
     chart.js: ^4.4.0
     classnames: ^2.3.2
