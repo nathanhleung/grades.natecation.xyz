@@ -196,6 +196,38 @@ export function getTermLongName(term: string) {
 }
 
 /**
+ * Compares two terms
+ *
+ * @param a the first term
+ * @param b the second term
+ * @returns a positive value if the first term is chronologically after
+ *  the second, 0 if they are equal, negative if the first term is
+ *  chronologically before the second.
+ * @example compareTerms("22S", "22W") would return a positive value.
+ */
+export function compareTerms(a: string, b: string) {
+  const quarterOrdering = ["W", "S", "1", "2", "F"];
+  const yearA = a.slice(0, 2);
+  const quarterIndexA = quarterOrdering.indexOf(a.slice(2));
+  const yearB = b.slice(0, 2);
+  const quarterIndexB = quarterOrdering.indexOf(b.slice(2));
+
+  if (yearA > yearB) {
+    return 1;
+  }
+  else if (yearA < yearB) {
+    return -1;
+  }
+  if (quarterIndexA === -1) {
+    return 1;
+  }
+  else if (quarterIndexB === -1)  {
+    return -1;
+  }
+  return quarterIndexA - quarterIndexB;
+}
+
+/**
  * Compares two letter grades
  *
  * @param a the first grade to compare
