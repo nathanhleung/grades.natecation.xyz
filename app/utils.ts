@@ -206,24 +206,34 @@ export function getTermLongName(term: string) {
  * @example compareTerms("22S", "22W") would return a positive value.
  */
 export function compareTerms(a: string, b: string) {
-  const quarterOrdering = ["W", "S", "1", "2", "F"];
-  const yearA = a.slice(0, 2);
-  const quarterIndexA = quarterOrdering.indexOf(a.slice(2));
-  const yearB = b.slice(0, 2);
-  const quarterIndexB = quarterOrdering.indexOf(b.slice(2));
+  // If well-formed, `a` and `b` will be of the form "YYQ"
+  const [yearAString, quarterA] = [a.slice(0, 2), a.slice(2)];
+  const [yearBString, quarterB] = [b.slice(0, 2), b.slice(2)];
 
-  if (yearA > yearB) {
-    return 1;
+  const yearA = parseInt(yearAString, 10);
+  const yearB = parseInt(yearBString, 10);
+
+  // If years are different, then just compare by year
+  if (yearA !== yearB) {
+    return yearA - yearB;
   }
-  else if (yearA < yearB) {
-    return -1;
-  }
+
+  // Winter quarter comes first on a calendar year basis
+  const quarterOrdering = ["W", "S", "1", "2", "F"];
+  const quarterIndexA = quarterOrdering.indexOf(quarterA);
+  const quarterIndexB = quarterOrdering.indexOf(quarterB);
+
+  // If the quarter designation in `a` is malformed, move `a` to the back.
   if (quarterIndexA === -1) {
     return 1;
   }
-  else if (quarterIndexB === -1)  {
+
+  // If the quarter designation in `b` is malformed, keep `a` in front.
+  if (quarterIndexB === -1) {
     return -1;
   }
+
+  // If the quarter designation is well-formed, then compare by quarter
   return quarterIndexA - quarterIndexB;
 }
 
