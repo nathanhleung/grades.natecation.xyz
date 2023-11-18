@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { UCLA_BLUE_RGB } from "../constants";
 import useCourseData from "../hooks/useCourseData";
-import { compareGrades, getTermLongName } from "../utils";
+import { compareGrades, compareTerms, getTermLongName } from "../utils";
 import { Loading } from "./Loading";
 import { Select } from "./Select";
 
@@ -73,7 +73,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
   const instructorNames = Object.keys(gradeCountsByInstructorNameByTerm);
   const instructorTerms = Object.keys(
     gradeCountsByInstructorNameByTerm[selectedInstructorName] ?? [],
-  );
+  ).sort(compareTerms);
 
   useEffect(() => {
     setSelectedTerm(last(instructorTerms) ?? "");
