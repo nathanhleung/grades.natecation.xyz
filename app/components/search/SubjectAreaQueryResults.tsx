@@ -107,12 +107,27 @@ const SubjectAreaQueryResults = ({
         score = 999;
       }
 
-      // If the search term is at the start of
-      // department name, boost the score
+      // If the search term exactly matches the subject area,
+      // boost the score.
+      // Make the subject area abbreviation more important than the long name.
+      // For example, normalizedQuery = "chem" should rank CHEM (Chemistry
+      // and Biochemistry) above CH ENGR (Chemical Engineering).
       if (
+        subjectArea.toLowerCase() == normalizedQuery
+      ) {
+        score += 100_000;
+      }
+      else if (
+        getSubjectAreaLongName(subjectArea).toLowerCase() == normalizedQuery
+      ) {
+        score += 10_000;
+      }
+      // Otherwise if the search term is at the start of
+      // department name, boost the score somewhat.
+      else if (
         getSubjectAreaLongName(subjectArea)
           .toLowerCase()
-          .indexOf(normalizedQuery) === 0
+          .startsWith(normalizedQuery)
       ) {
         score += 999;
       }
