@@ -28,7 +28,7 @@ export default function RootLayout({
         <div className="w-full py-2 bg-uclaGold select-none">
           <Marquee autoFill pauseOnHover speed={20}>
             <p className="px-12 uppercase font-bold">
-              🔥 Just dropped! 2022–23 grade distributions 🔥
+              📚 Check out our new blog! 📚
             </p>
           </Marquee>
         </div>
