@@ -56,12 +56,13 @@ const Search = ({ onlyInput = false }: SearchProps) => {
             : "I want the grade distribution for"}
         </h1>
       )}
-      <div className="flex flex-col md:flex-row gap-2">
+      <div className={"grid grid-cols-1 lg:grid-cols-2 gap-2"}>
         <input
           className={classNames(
-            "flex-1 p-4 outline-none text-center text-2xl text-black",
+            "p-4 outline-none text-center text-2xl text-black",
             "font-bold shadow-lg disabled:bg-white rounded transition-all border-uclaBlue border-b-8 focus:border-uclaGold",
-            selectedSubjectArea && "rounded-r-none",
+            !selectedSubjectArea && "lg:col-span-2",
+            selectedSubjectArea && "rounded-r-none"
           )}
           type="text"
           ref={subjectAreaQueryInputRef}
@@ -91,9 +92,9 @@ const Search = ({ onlyInput = false }: SearchProps) => {
         {selectedSubjectArea && (
           <input
             className={classNames(
-              "flex-1 p-4 outline-none text-center text-2xl text-black",
+              "p-4 outline-none text-center text-2xl text-black",
               "font-bold shadow-lg disabled:bg-white rounded",
-              "rounded-l-none transition-all border-uclaBlue border-b-8 focus:border-uclaGold",
+              "rounded-l-none transition-all border-uclaBlue border-b-8 focus:border-uclaGold"
             )}
             type="text"
             ref={catalogNumberQueryInputRef}
