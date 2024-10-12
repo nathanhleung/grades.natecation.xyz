@@ -1,5 +1,5 @@
 import untypedInstructorIndex from "@/app/generated/instructor-index.json";
-import { CourseRow } from "@/app/types";
+import { BaseCourseRow, CourseRow } from "@/app/types";
 import { NextResponse } from "next/server";
 
 type InstructorIndex = {
@@ -10,7 +10,11 @@ const instructorIndex = untypedInstructorIndex as InstructorIndex;
 
 type CoursesByInstructor = {
   [instructor: string]: {
-    [subjectArea: string]: Set<string>;
+    [subjectArea: string]: {
+      [catalogNumber: string]: BaseCourseRow & {
+        nRows: number;
+      };
+    };
   };
 };
 
@@ -25,19 +29,26 @@ export async function GET() {
     for (const course of instructorIndex[instructor]) {
       const { subjectArea } = course;
       if (!coursesByInstructor[instructor][subjectArea]) {
-        coursesByInstructor[instructor][subjectArea] = new Set();
+        coursesByInstructor[instructor][subjectArea] = {};
       }
-      coursesByInstructor[instructor][subjectArea].add(course.catalogNumber);
+      if (!coursesByInstructor[instructor][subjectArea][course.catalogNumber]) {
+        coursesByInstructor[instructor][subjectArea][course.catalogNumber] = {
+          subjectArea,
+          courseTitle: course.courseTitle,
+          catalogNumber: course.catalogNumber,
+          nRows: 1,
+        };
+      } else {
+        coursesByInstructor[instructor][subjectArea][
+          course.catalogNumber
+        ].nRows += 1;
+      }
+      coursesByInstructor[instructor][subjectArea];
     }
   }
 
-  return NextResponse.json(
-    JSON.parse(
-      JSON.stringify(
-        coursesByInstructor,
-        // Convert Sets to Arrays so they are correctly stringified
-        (_, value) => (value instanceof Set ? Array.from(value) : value),
-      ),
-    ),
-  );
+  return NextResponse.json(coursesByInstructor);
 }
+
+// TODO(nathanhleung): this `type` is slightly inaccurate since we return `Array`s rather than `Set`s
+export type Response = CoursesByInstructor;

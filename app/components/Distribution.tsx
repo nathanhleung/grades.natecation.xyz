@@ -10,6 +10,7 @@ import useCourseData from "../hooks/useCourseData";
 import { compareGrades, compareTerms, getTermLongName } from "../utils";
 import { Loading } from "./Loading";
 import { Select } from "./Select";
+import { useSearchParams } from "next/navigation";
 
 type DistributionProps = {
   subjectArea: string;
@@ -18,8 +19,16 @@ type DistributionProps = {
 
 const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
   const { courseData } = useCourseData(subjectArea, catalogNumber);
-  const [selectedInstructorName, setSelectedInstructorName] =
-    useState<string>("");
+  const [selectedInstructorName, setSelectedInstructorName] = useState("");
+
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    if (searchParams.has("instructor")) {
+      const instructorParam = searchParams.get("instructor") ?? "";
+      setSelectedInstructorName(instructorParam);
+    }
+  }, [searchParams]);
+
   const [selectedTerm, setSelectedTerm] = useState<string>("");
 
   const courseDataByInstructorName = groupBy(courseData, get("instructorName"));
@@ -28,21 +37,28 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
   const [instructorWithMostSections] =
     maxBy(Object.entries(rowCountByInstructorName), get("1")) ?? [];
 
+  // On initial load, set selected instructor to instructor with most sections
   useEffect(() => {
-    if (selectedInstructorName === "") {
-      setSelectedInstructorName(instructorWithMostSections ?? "");
+    if (selectedInstructorName === "" && instructorWithMostSections) {
+      setSelectedInstructorName(instructorWithMostSections);
     }
-  }, [instructorWithMostSections]);
+  }, [instructorWithMostSections, selectedInstructorName]);
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("instructor", selectedInstructorName);
+    history.replaceState({}, "", url);
+  }, [selectedInstructorName]);
 
   const courseDataByInstructorNameByTerm = mapValues(
     courseDataByInstructorName,
     (courseDataForInstructorName) => {
       const courseDataForInstructorNameByTerm = groupBy(
         courseDataForInstructorName,
-        get("enrollmentTerm"),
+        get("enrollmentTerm")
       );
       return courseDataForInstructorNameByTerm;
-    },
+    }
   );
 
   const gradeCountsByInstructorNameByTerm = mapValues(
@@ -53,36 +69,36 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
         (courseDataForInstructorNameForTerm) => {
           const courseDataForInstructorNameForTermByGradeOffered = groupBy(
             courseDataForInstructorNameForTerm,
-            get("gradeOffered"),
+            get("gradeOffered")
           );
           const gradeCountsForInstructorNameForTermByGradeOffered = mapValues(
             courseDataForInstructorNameForTermByGradeOffered,
             (courseDataForInstructorNameForTermForGradeOffered) => {
               return sumBy(
                 courseDataForInstructorNameForTermForGradeOffered,
-                compose(Number, get("gradeCount")),
+                compose(Number, get("gradeCount"))
               );
-            },
+            }
           );
           return gradeCountsForInstructorNameForTermByGradeOffered;
-        },
+        }
       );
-    },
+    }
   );
 
   const instructorNames = Object.keys(gradeCountsByInstructorNameByTerm);
   const instructorTerms = Object.keys(
-    gradeCountsByInstructorNameByTerm[selectedInstructorName] ?? [],
+    gradeCountsByInstructorNameByTerm[selectedInstructorName] ?? []
   ).sort(compareTerms);
 
   useEffect(() => {
     setSelectedTerm(last(instructorTerms) ?? "");
-  }, [selectedInstructorName]);
+  }, [selectedInstructorName, instructorTerms]);
 
   const gradeCountsForInstructorNameForTerm =
     gradeCountsByInstructorNameByTerm?.[selectedInstructorName]?.[selectedTerm];
   const gradeCountArray = Object.values(
-    gradeCountsForInstructorNameForTerm ?? {},
+    gradeCountsForInstructorNameForTerm ?? {}
   );
   const totalGradeCountForInstructorNameForTerm = sum(gradeCountArray);
   const maxGradeCount = Math.max(...gradeCountArray);
@@ -180,7 +196,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                   // of the max single letter grade count for more spacing on top.
                   max: Math.min(
                     (15 / 14) * maxGradeCount,
-                    totalGradeCountForInstructorNameForTerm,
+                    totalGradeCountForInstructorNameForTerm
                   ),
                 },
               },
