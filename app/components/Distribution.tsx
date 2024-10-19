@@ -210,4 +210,12 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
   );
 };
 
-export { Distribution };
+const SuspendedDistribution = (props: DistributionProps) => {
+  return (
+    <React.Suspense fallback={<Loading />}>
+      <Distribution {...props} />
+    </React.Suspense>
+  );
+};
+
+export { SuspendedDistribution as Distribution };

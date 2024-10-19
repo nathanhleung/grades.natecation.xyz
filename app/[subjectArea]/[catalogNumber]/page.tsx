@@ -2,8 +2,6 @@ import { CourseTitle } from "@/app/components/CourseTitle";
 import { Distribution } from "@/app/components/Distribution";
 import { ShareCourseButton } from "@/app/components/ShareCourseButton";
 import { Metadata } from "next";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 type Props = {
   params: { subjectArea: string; catalogNumber: string };

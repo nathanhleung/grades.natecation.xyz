@@ -9,7 +9,7 @@ import { SubjectAreaQueryResults } from "@/app/components/search/SubjectAreaQuer
 import useCourses from "@/app/hooks/useCourses";
 import classNames from "classnames";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 
 type SearchProps = {
   onlyInput?: boolean;
@@ -270,4 +270,13 @@ const Search = ({ onlyInput = false }: SearchProps) => {
   );
 };
 
-export { Search };
+const SuspendedSearch = (props: SearchProps) => {
+  // Need to wrap in `Suspense` because `BaseSearch` uses `useSearchParams`
+  return (
+    <Suspense fallback={<Loading />}>
+      <Search {...props} />
+    </Suspense>
+  );
+};
+
+export { SuspendedSearch as Search };
