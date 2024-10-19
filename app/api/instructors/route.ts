@@ -50,5 +50,4 @@ export async function GET() {
   return NextResponse.json(coursesByInstructor);
 }
 
-// TODO(nathanhleung): this `type` is slightly inaccurate since we return `Array`s rather than `Set`s
 export type Response = CoursesByInstructor;
