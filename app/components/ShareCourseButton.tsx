@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type ShareCourseButtonProps = {
   subjectArea: string;
@@ -16,13 +16,16 @@ const ShareCourseButton = ({
 }: ShareCourseButtonProps) => {
   const [canShare, setCanShare] = useState(false);
 
-  const shareData = {
-    title: `${subjectArea} ${catalogNumber} Grade Distribution`,
-    text: `2021-23 grade distributions for ${subjectArea} ${catalogNumber}`,
-    url: `${process.env.NEXT_PUBLIC_EXTERNAL_HOST}/${encodeURIComponent(
-      subjectArea,
-    )}/${encodeURIComponent(catalogNumber)}`,
-  };
+  const shareData = useMemo(
+    () => ({
+      title: `${subjectArea} ${catalogNumber} Grade Distribution`,
+      text: `2021-23 grade distributions for ${subjectArea} ${catalogNumber}`,
+      url: `${process.env.NEXT_PUBLIC_EXTERNAL_HOST}/${encodeURIComponent(
+        subjectArea
+      )}/${encodeURIComponent(catalogNumber)}`,
+    }),
+    [subjectArea, catalogNumber]
+  );
 
   useEffect(() => {
     // Only works over HTTPS
