@@ -1,5 +1,5 @@
 import untypedSubjectIndex from "@/app/generated/subject-index.json";
-import { CourseRow } from "@/app/types";
+import { BaseCourseRow, CourseRow } from "@/app/types";
 import { mapValues, pick } from "lodash";
 import { NextResponse } from "next/server";
 
@@ -13,9 +13,7 @@ const subjectIndex = untypedSubjectIndex as SubjectIndex;
 
 type CatalogNumbersBySubjectArea = {
   [subjectArea: string]: {
-    [catalogNumber: string]: {
-      courseTitle: string;
-      catalogNumber: string;
+    [catalogNumber: string]: BaseCourseRow & {
       nRows: number;
     };
   };
@@ -32,11 +30,12 @@ export async function GET() {
       subjectIndex[subjectArea],
       (rows, key) => {
         return {
+          subjectArea,
           ...pick(rows[0], "courseTitle"),
           catalogNumber: key,
           nRows: rows.length,
         };
-      },
+      }
     );
   }
 

@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${decodeURIComponent(subjectArea)} ${decodeURIComponent(
-      catalogNumber,
+      catalogNumber
     )}`,
   };
 }
@@ -70,7 +70,7 @@ export default function Course({
         </div>
         <div className="w-full h-auto flex flex-1 justify-center p-4 sm:p-8 md:p-12 text-white bg-uclaBlue">
           <div className="flex flex-col w-full md:w-[65%] lg:w-[60%] xl:w-[50%] md:mx-auto items-center">
-            <div className="w-full text-black bg-white shadow p-4 sm:p-12">
+            <div className="w-full text-black bg-white shadow-xl p-4 sm:p-12 rounded-xl">
               <Distribution
                 subjectArea={subjectArea}
                 catalogNumber={catalogNumber}

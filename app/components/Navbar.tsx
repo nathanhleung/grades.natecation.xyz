@@ -40,9 +40,9 @@ const Navbar = () => {
           >
             Contact
           </a>
-          <div className="rounded pl-4 pr-8 py-1 bg-white text-black cursor-text hidden lg:block">
+          <div className="rounded pl-4 pr-8 py-1 bg-white cursor-text hidden lg:block hover:shadow-xl">
             <div
-              className="flex items-center font-bold opacity-50 gap-4"
+              className="flex items-center font-bold text-black text-sm opacity-50 gap-4"
               onClick={() => setSearchModalOpen(true)}
             >
               <svg
@@ -69,11 +69,11 @@ const Navbar = () => {
         isOpen={searchModalOpen}
         onRequestClose={() => setSearchModalOpen(false)}
         bodyOpenClassName="overflow-hidden"
-        overlayClassName="fixed inset-0 bg-[rgba(39,116,174,0.85)]"
+        overlayClassName="fixed inset-0 bg-[rgba(39,116,174,0.95)]"
         className="relative top-[10vh] max-h-[90vh] md:w-[65%] lg:w-[60%] xl:w-[50%] md:mx-auto items-center p-6 sm:p-8 md:p-12 overflow-x-scroll"
       >
         <Search onlyInput />
-        <div className="mt-6 flex justify-center">
+        <div className="mt-16 flex justify-center">
           <a
             className="text-md font-bold text-white border-white border-2 hover:opacity-50 p-4 rounded cursor-pointer"
             onClick={() => setSearchModalOpen(false)}
