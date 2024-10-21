@@ -33,8 +33,6 @@ const CourseQueryResults = ({
   queryParams,
   matcher,
 }: CourseQueryResultsProps) => {
-  console.log({ courses });
-
   return (
     <QueryResults
       data={courses}

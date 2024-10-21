@@ -40,22 +40,32 @@ const Navbar = () => {
           >
             Contact
           </a>
-          <div className="rounded pl-4 pr-8 py-1 bg-white cursor-text hidden lg:block hover:shadow-xl">
-            <div
-              className="flex items-center font-bold text-black text-sm opacity-50 gap-4"
-              onClick={() => setSearchModalOpen(true)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="1em"
-                viewBox="0 0 512 512"
+          {pathname !== "/" && (
+            <div className="rounded pl-4 pr-8 py-1 bg-white cursor-text hidden lg:block hover:shadow-xl md:min-w-[250px]">
+              <div
+                className="flex items-center font-bold text-black text-sm opacity-50 gap-4"
+                onClick={() => {
+                  if (pathname === "/") {
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete("subjectArea");
+                    url.searchParams.delete("instructor");
+                    history.pushState({}, "", url);
+                  }
+                  setSearchModalOpen(true);
+                }}
               >
-                {/* <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --> */}
-                <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
-              </svg>
-              <p>Search by department</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="1em"
+                  viewBox="0 0 512 512"
+                >
+                  {/* <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --> */}
+                  <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                </svg>
+                <p>Search for classes</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div>
           {randomDonor && (
@@ -67,7 +77,15 @@ const Navbar = () => {
       </div>
       <Modal
         isOpen={searchModalOpen}
-        onRequestClose={() => setSearchModalOpen(false)}
+        onRequestClose={() => {
+          if (pathname === "/") {
+            const url = new URL(window.location.href);
+            url.searchParams.delete("subjectArea");
+            url.searchParams.delete("instructor");
+            history.pushState({}, "", url);
+          }
+          setSearchModalOpen(false);
+        }}
         bodyOpenClassName="overflow-hidden"
         overlayClassName="fixed inset-0 bg-[rgba(39,116,174,0.95)]"
         className="relative top-[10vh] max-h-[90vh] md:w-[65%] lg:w-[60%] xl:w-[50%] md:mx-auto items-center p-6 sm:p-8 md:p-12 overflow-x-scroll"
@@ -76,7 +94,15 @@ const Navbar = () => {
         <div className="mt-16 flex justify-center">
           <a
             className="text-md font-bold text-white border-white border-2 hover:opacity-50 p-4 rounded cursor-pointer"
-            onClick={() => setSearchModalOpen(false)}
+            onClick={() => {
+              if (pathname === "/") {
+                const url = new URL(window.location.href);
+                url.searchParams.delete("subjectArea");
+                url.searchParams.delete("instructor");
+                history.pushState({}, "", url);
+              }
+              setSearchModalOpen(false);
+            }}
           >
             Close
           </a>

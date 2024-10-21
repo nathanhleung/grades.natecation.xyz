@@ -44,12 +44,6 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
     }
   }, [instructorWithMostSections, selectedInstructorName]);
 
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    url.searchParams.set("instructor", selectedInstructorName);
-    history.replaceState({}, "", url);
-  }, [selectedInstructorName]);
-
   const courseDataByInstructorNameByTerm = mapValues(
     courseDataByInstructorName,
     (courseDataForInstructorName) => {
@@ -139,6 +133,13 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                   ) {
                     setSelectedInstructorName(newSelectedInstructorName);
                     setSelectedTerm("");
+
+                    const url = new URL(window.location.href);
+                    url.searchParams.set(
+                      "instructor",
+                      newSelectedInstructorName
+                    );
+                    history.replaceState({}, "", url);
                   }
                 }}
                 options={instructorNames}

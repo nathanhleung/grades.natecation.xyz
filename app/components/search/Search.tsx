@@ -8,6 +8,7 @@ import { InstructorQueryResults } from "@/app/components/search/InstructorQueryR
 import { SubjectAreaQueryResults } from "@/app/components/search/SubjectAreaQueryResults";
 import useCourses from "@/app/hooks/useCourses";
 import classNames from "classnames";
+import { set } from "lodash";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 
@@ -251,12 +252,24 @@ const Search = ({ onlyInput = false }: SearchProps) => {
         <span
           className="text-xs underline hover:opacity-50 cursor-pointer select-none text-white"
           onClick={() => {
-            setSubjectAreaQuery("");
+            if (pathname === "/") {
+              const url = new URL(window.location.href);
+              url.searchParams.delete("subjectArea");
+              url.searchParams.delete("instructor");
+              history.pushState({}, "", url);
+            }
+
+            if (isSearchingByInstructor) {
+              setSubjectAreaQuery(instructorQuery);
+            } else {
+              setInstructorQuery(subjectAreaQuery);
+            }
+
             setSelectedSubjectArea("");
             setCatalogNumberQuery("");
-            setInstructorQuery("");
             setSelectedInstructor("");
-            setIsSearchingByInstructor((prev) => !prev);
+
+            setIsSearchingByInstructor(!isSearchingByInstructor);
 
             instructorQueryInputRef.current?.focus();
             subjectAreaQueryInputRef.current?.focus();
