@@ -271,7 +271,7 @@ const Search = ({ onlyInput = false }: SearchProps) => {
 };
 
 const SuspendedSearch = (props: SearchProps) => {
-  // Need to wrap in `Suspense` because `BaseSearch` uses `useSearchParams`
+  // Need to wrap in `Suspense` because `Search` uses `useSearchParams`
   return (
     <Suspense fallback={<Loading />}>
       <Search {...props} />

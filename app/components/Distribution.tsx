@@ -3,7 +3,7 @@
 import "chart.js/auto";
 import { groupBy, last, mapValues, maxBy, size, sum, sumBy } from "lodash";
 import { compose, get } from "lodash/fp";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { UCLA_BLUE_RGB } from "../constants";
 import useCourseData from "../hooks/useCourseData";
@@ -212,9 +212,10 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
 
 const SuspendedDistribution = (props: DistributionProps) => {
   return (
-    <React.Suspense fallback={<Loading />}>
+    // Need to wrap in `Suspense` because `Distribution` uses `useSearchParams`
+    <Suspense fallback={<Loading />}>
       <Distribution {...props} />
-    </React.Suspense>
+    </Suspense>
   );
 };
 
