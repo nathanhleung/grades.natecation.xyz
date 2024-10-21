@@ -8,7 +8,6 @@ import { InstructorQueryResults } from "@/app/components/search/InstructorQueryR
 import { SubjectAreaQueryResults } from "@/app/components/search/SubjectAreaQueryResults";
 import useCourses from "@/app/hooks/useCourses";
 import classNames from "classnames";
-import { set } from "lodash";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 

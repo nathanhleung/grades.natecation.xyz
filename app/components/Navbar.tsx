@@ -45,12 +45,6 @@ const Navbar = () => {
               <div
                 className="flex items-center font-bold text-black text-sm opacity-50 gap-4"
                 onClick={() => {
-                  if (pathname === "/") {
-                    const url = new URL(window.location.href);
-                    url.searchParams.delete("subjectArea");
-                    url.searchParams.delete("instructor");
-                    history.pushState({}, "", url);
-                  }
                   setSearchModalOpen(true);
                 }}
               >
@@ -78,12 +72,6 @@ const Navbar = () => {
       <Modal
         isOpen={searchModalOpen}
         onRequestClose={() => {
-          if (pathname === "/") {
-            const url = new URL(window.location.href);
-            url.searchParams.delete("subjectArea");
-            url.searchParams.delete("instructor");
-            history.pushState({}, "", url);
-          }
           setSearchModalOpen(false);
         }}
         bodyOpenClassName="overflow-hidden"
@@ -95,12 +83,6 @@ const Navbar = () => {
           <a
             className="text-md font-bold text-white border-white border-2 hover:opacity-50 p-4 rounded cursor-pointer"
             onClick={() => {
-              if (pathname === "/") {
-                const url = new URL(window.location.href);
-                url.searchParams.delete("subjectArea");
-                url.searchParams.delete("instructor");
-                history.pushState({}, "", url);
-              }
               setSearchModalOpen(false);
             }}
           >
