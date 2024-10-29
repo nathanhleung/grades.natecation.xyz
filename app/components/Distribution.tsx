@@ -3,7 +3,7 @@
 import "chart.js/auto";
 import { groupBy, last, mapValues, maxBy, size, sum, sumBy } from "lodash";
 import { compose, get } from "lodash/fp";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { UCLA_BLUE_RGB } from "../constants";
 import useCourseData from "../hooks/useCourseData";
@@ -31,7 +31,10 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
 
   const [selectedTerm, setSelectedTerm] = useState<string>("");
 
-  const courseDataByInstructorName = groupBy(courseData, get("instructorName"));
+  const courseDataByInstructorName = useMemo(
+    () => groupBy(courseData, get("instructorName")),
+    [courseData]
+  );
 
   const rowCountByInstructorName = mapValues(courseDataByInstructorName, size);
   const [instructorWithMostSections] =
@@ -44,46 +47,56 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
     }
   }, [instructorWithMostSections, selectedInstructorName]);
 
-  const courseDataByInstructorNameByTerm = mapValues(
-    courseDataByInstructorName,
-    (courseDataForInstructorName) => {
-      const courseDataForInstructorNameByTerm = groupBy(
-        courseDataForInstructorName,
-        get("enrollmentTerm")
-      );
-      return courseDataForInstructorNameByTerm;
-    }
+  const courseDataByInstructorNameByTerm = useMemo(
+    () =>
+      mapValues(courseDataByInstructorName, (courseDataForInstructorName) => {
+        const courseDataForInstructorNameByTerm = groupBy(
+          courseDataForInstructorName,
+          get("enrollmentTerm")
+        );
+        return courseDataForInstructorNameByTerm;
+      }),
+    [courseDataByInstructorName]
   );
 
-  const gradeCountsByInstructorNameByTerm = mapValues(
-    courseDataByInstructorNameByTerm,
-    (courseDataForInstructorNameByTerm) => {
-      return mapValues(
-        courseDataForInstructorNameByTerm,
-        (courseDataForInstructorNameForTerm) => {
-          const courseDataForInstructorNameForTermByGradeOffered = groupBy(
-            courseDataForInstructorNameForTerm,
-            get("gradeOffered")
-          );
-          const gradeCountsForInstructorNameForTermByGradeOffered = mapValues(
-            courseDataForInstructorNameForTermByGradeOffered,
-            (courseDataForInstructorNameForTermForGradeOffered) => {
-              return sumBy(
-                courseDataForInstructorNameForTermForGradeOffered,
-                compose(Number, get("gradeCount"))
+  const gradeCountsByInstructorNameByTerm = useMemo(
+    () =>
+      mapValues(
+        courseDataByInstructorNameByTerm,
+        (courseDataForInstructorNameByTerm) => {
+          return mapValues(
+            courseDataForInstructorNameByTerm,
+            (courseDataForInstructorNameForTerm) => {
+              const courseDataForInstructorNameForTermByGradeOffered = groupBy(
+                courseDataForInstructorNameForTerm,
+                get("gradeOffered")
               );
+              const gradeCountsForInstructorNameForTermByGradeOffered =
+                mapValues(
+                  courseDataForInstructorNameForTermByGradeOffered,
+                  (courseDataForInstructorNameForTermForGradeOffered) => {
+                    return sumBy(
+                      courseDataForInstructorNameForTermForGradeOffered,
+                      compose(Number, get("gradeCount"))
+                    );
+                  }
+                );
+              return gradeCountsForInstructorNameForTermByGradeOffered;
             }
           );
-          return gradeCountsForInstructorNameForTermByGradeOffered;
         }
-      );
-    }
+      ),
+    [courseDataByInstructorNameByTerm]
   );
 
   const instructorNames = Object.keys(gradeCountsByInstructorNameByTerm);
-  const instructorTerms = Object.keys(
-    gradeCountsByInstructorNameByTerm[selectedInstructorName] ?? []
-  ).sort(compareTerms);
+  const instructorTerms = useMemo(
+    () =>
+      Object.keys(
+        gradeCountsByInstructorNameByTerm[selectedInstructorName] ?? []
+      ).sort(compareTerms),
+    [gradeCountsByInstructorNameByTerm, selectedInstructorName]
+  );
 
   useEffect(() => {
     setSelectedTerm(last(instructorTerms) ?? "");
