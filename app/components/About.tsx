@@ -49,6 +49,15 @@ const About = () => {
       >
         Fall 2022–Spring 2023
       </a>
+      ,{" "}
+      <a
+        href="https://docs.google.com/spreadsheets/d/13HGfffKLACEfCcVGNshu8Y_dfNip2kA2/edit?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-uclaBlue hover:opacity-50"
+      >
+        Summer 2023–Spring 2024
+      </a>
       <br />
       <br />
       Source code for this site is{" "}
