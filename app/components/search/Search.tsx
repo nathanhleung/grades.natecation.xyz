@@ -182,22 +182,24 @@ const Search = ({ onlyInput = false }: SearchProps) => {
         )}
       </div>
       <div className="mt-6">
-        {instructorQuery !== "" && selectedInstructor === "" && (
-          <InstructorQueryResults
-            query={instructorQuery}
-            instructors={instructors}
-            onSelectInstructor={(instructor) => {
-              setSelectedInstructor(instructor);
+        {isSearchingByInstructor &&
+          instructorQuery !== "" &&
+          selectedInstructor === "" && (
+            <InstructorQueryResults
+              query={instructorQuery}
+              instructors={instructors}
+              onSelectInstructor={(instructor) => {
+                setSelectedInstructor(instructor);
 
-              if (pathname === "/") {
-                const url = new URL(window.location.href);
-                url.searchParams.set("instructor", instructor);
-                history.pushState({}, "", url);
-              }
-            }}
-          />
-        )}
-        {selectedInstructor && (
+                if (pathname === "/") {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("instructor", instructor);
+                  history.pushState({}, "", url);
+                }
+              }}
+            />
+          )}
+        {isSearchingByInstructor && selectedInstructor && (
           <CourseQueryResults
             courses={Object.keys(instructors[selectedInstructor])
               .map((subjectArea) => {
@@ -211,34 +213,34 @@ const Search = ({ onlyInput = false }: SearchProps) => {
             matcher={() => () => ({ matches: true, score: 0 })}
           />
         )}
-        {subjectAreaQuery !== "" && selectedSubjectArea === "" ? (
-          <SubjectAreaQueryResults
-            courses={courses}
-            query={subjectAreaQuery}
-            onSelectSubjectArea={(subjectArea) => {
-              setSelectedSubjectArea(subjectArea);
+        {!isSearchingByInstructor &&
+          (subjectAreaQuery !== "" && selectedSubjectArea === "" ? (
+            <SubjectAreaQueryResults
+              courses={courses}
+              query={subjectAreaQuery}
+              onSelectSubjectArea={(subjectArea) => {
+                setSelectedSubjectArea(subjectArea);
 
-              if (pathname === "/") {
-                const url = new URL(window.location.href);
-                url.searchParams.set("subjectArea", subjectArea);
-                history.pushState({}, "", url);
-              }
+                if (pathname === "/") {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("subjectArea", subjectArea);
+                  history.pushState({}, "", url);
+                }
 
-              // Wait until next tick to ensure component is mounted
-              requestAnimationFrame(() => {
-                catalogNumberQueryInputRef.current?.focus();
-              });
-            }}
-          />
-        ) : (
-          !onlyInput &&
-          !isSearchingByInstructor &&
-          subjectAreaQuery === "" && (
-            <h1 className="text-2xl lg:text-3xl text-center font-bold">
-              department
-            </h1>
-          )
-        )}
+                // Wait until next tick to ensure component is mounted
+                requestAnimationFrame(() => {
+                  catalogNumberQueryInputRef.current?.focus();
+                });
+              }}
+            />
+          ) : (
+            !onlyInput &&
+            subjectAreaQuery === "" && (
+              <h1 className="text-2xl lg:text-3xl text-center font-bold">
+                department
+              </h1>
+            )
+          ))}
         {selectedSubjectArea && (
           <CatalogNumberQueryResults
             courses={courses}
