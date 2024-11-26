@@ -1,6 +1,6 @@
-# 📊 [UCLA Grade Distributions 2021-23](https://grades.natecation.xyz/)
+# 📊 [UCLAGrades](https://uclagrades.com/)
 
-This website, brought to you by [40+ UCLA students](https://grades.natecation.xyz/shoutouts), displays [grade distribution data](https://grades.natecation.xyz/) for:
+This website, brought to you by [40+ UCLA students](https://uclagrades.com/shoutouts), displays [UCLA grade distribution data](https://uclagrades.com/) for:
 
 - Fall 2021
 - Winter 2022
@@ -15,7 +15,7 @@ This website, brought to you by [40+ UCLA students](https://grades.natecation.xy
 - Spring 2024
 
 This site is not affiliated with UCLA. Grade distribution data from 2021–2022 was
-sourced through a February 2023 [public records request](https://drive.google.com/file/d/1l-R7LN9jOFUic3b4WTk4WxfDSjGNpuVw/view?usp=sharing) made under the California Public Records Act. [40+](https://grades.natecation.xyz/shoutouts) UCLA students [paid $131.25](https://drive.google.com/file/d/14LuoYaDCPUmts_6igA8rC3AVI2Ntyvqc/view?usp=sharing) to obtain these records. Grade distribution data from 2022–2023 was
+sourced through a February 2023 [public records request](https://drive.google.com/file/d/1l-R7LN9jOFUic3b4WTk4WxfDSjGNpuVw/view?usp=sharing) made under the California Public Records Act. [40+](https://uclagrades.com/shoutouts) UCLA students [paid $131.25](https://drive.google.com/file/d/14LuoYaDCPUmts_6igA8rC3AVI2Ntyvqc/view?usp=sharing) to obtain these records. Grade distribution data from 2022–2023 was
 sourced similarly.
 
 UCLA students can download the data on Google Drive (log into your UCLA Google Account to access):
@@ -55,4 +55,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The app is deployed on Vercel and available at https://grades.natecation.xyz/.
+The app is deployed on Vercel and available at https://uclagrades.com/.

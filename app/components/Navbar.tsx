@@ -24,7 +24,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between w-full bg-uclaBlue text-white p-3 lg:py-2 select-none">
         <div className="flex items-center gap-12">
           <Link href="/" className="font-bold hover:opacity-50">
-            grades.natecation.xyz
+            uclagrades.com
           </Link>
           <Link href="/" className="font-semibold hover:opacity-50">
             Home

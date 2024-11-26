@@ -4,7 +4,7 @@ const MobileNavbar = () => {
   return (
     <div className="w-full text-center bg-uclaBlue text-white p-4">
       <Link href="/" className="font-bold hover:opacity-50">
-        grades.natecation.xyz
+        uclagrades.com
       </Link>
       <div className="flex items-center justify-center gap-2 mt-2">
         <Link href="/" className="font-semibold hover:opacity-50">

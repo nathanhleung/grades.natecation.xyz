@@ -143,7 +143,7 @@ export default function About() {
             This website was developed over the course of a few weeks in late
             June and early July. Source code for this site is{" "}
             <a
-              href="https://github.com/nathanhleung/grades.natecation.xyz"
+              href="https://github.com/nathanhleung/uclagrades.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-uclaBlue hover:opacity-50"
