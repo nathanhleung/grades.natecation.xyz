@@ -1,4 +1,4 @@
-# 📊 [UCLAGrades](https://uclagrades.com/)
+# 📊 [uclagrades.com](https://uclagrades.com/)
 
 This website, brought to you by [40+ UCLA students](https://uclagrades.com/shoutouts), displays [UCLA grade distribution data](https://uclagrades.com/) for:
 
