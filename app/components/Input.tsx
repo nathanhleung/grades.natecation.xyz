@@ -5,7 +5,7 @@ type InputProps = JSX.IntrinsicElements["input"];
 
 const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   { className, ...restProps },
-  ref
+  ref,
 ) {
   return (
     <input
@@ -13,7 +13,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       className={classNames(
         "p-4 outline-none text-center text-2xl text-black",
         "font-bold shadow-lg disabled:bg-white rounded transition-all border-uclaBlue border-b-8 focus:border-uclaGold hover:shadow-2xl",
-        className
+        className,
       )}
       {...restProps}
     />

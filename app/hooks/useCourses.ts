@@ -35,7 +35,7 @@ function useCourses() {
   useEffect(() => {
     const cachedCourses = window.localStorage.getItem("courses");
     const cachedCoursesExpiration = new Date(
-      window.localStorage.getItem("courses-expiration") ?? 0
+      window.localStorage.getItem("courses-expiration") ?? 0,
     );
     const now = new Date();
 
@@ -49,7 +49,7 @@ function useCourses() {
           window.localStorage.setItem("courses", JSON.stringify(json));
           window.localStorage.setItem(
             "courses-expiration",
-            addDays(now, 1).toISOString()
+            addDays(now, 1).toISOString(),
           );
         })
         .finally(() => {
@@ -61,7 +61,7 @@ function useCourses() {
   useEffect(() => {
     const cachedInstructors = window.localStorage.getItem("instructors");
     const cachedInstructorsExpiration = new Date(
-      window.localStorage.getItem("instructors-expiration") ?? 0
+      window.localStorage.getItem("instructors-expiration") ?? 0,
     );
     const now = new Date();
 
@@ -75,7 +75,7 @@ function useCourses() {
           window.localStorage.setItem("instructors", JSON.stringify(json));
           window.localStorage.setItem(
             "instructors-expiration",
-            addDays(now, 1).toISOString()
+            addDays(now, 1).toISOString(),
           );
         })
         .finally(() => {

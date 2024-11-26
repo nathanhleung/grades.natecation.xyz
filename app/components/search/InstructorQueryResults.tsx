@@ -40,7 +40,7 @@ const InstructorQueryResults = ({
         (acc, subjectAreaCourses) => {
           return acc + Object.keys(subjectAreaCourses).length;
         },
-        0
+        0,
       );
 
       return {
@@ -63,7 +63,7 @@ const InstructorQueryResults = ({
           (acc, subjectAreaCourses) => {
             return acc + Object.keys(subjectAreaCourses).length;
           },
-          0
+          0,
         );
 
         return (

@@ -112,12 +112,9 @@ const SubjectAreaQueryResults = ({
       // Make the subject area abbreviation more important than the long name.
       // For example, normalizedQuery = "chem" should rank CHEM (Chemistry
       // and Biochemistry) above CH ENGR (Chemical Engineering).
-      if (
-        subjectArea.toLowerCase() == normalizedQuery
-      ) {
+      if (subjectArea.toLowerCase() == normalizedQuery) {
         score += 100_000;
-      }
-      else if (
+      } else if (
         getSubjectAreaLongName(subjectArea).toLowerCase() == normalizedQuery
       ) {
         score += 10_000;

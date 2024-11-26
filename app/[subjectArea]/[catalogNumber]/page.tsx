@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${decodeURIComponent(subjectArea)} ${decodeURIComponent(
-      catalogNumber
+      catalogNumber,
     )}`,
   };
 }

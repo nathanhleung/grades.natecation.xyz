@@ -33,7 +33,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
 
   const courseDataByInstructorName = useMemo(
     () => groupBy(courseData, get("instructorName")),
-    [courseData]
+    [courseData],
   );
 
   const rowCountByInstructorName = mapValues(courseDataByInstructorName, size);
@@ -52,11 +52,11 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
       mapValues(courseDataByInstructorName, (courseDataForInstructorName) => {
         const courseDataForInstructorNameByTerm = groupBy(
           courseDataForInstructorName,
-          get("enrollmentTerm")
+          get("enrollmentTerm"),
         );
         return courseDataForInstructorNameByTerm;
       }),
-    [courseDataByInstructorName]
+    [courseDataByInstructorName],
   );
 
   const gradeCountsByInstructorNameByTerm = useMemo(
@@ -69,7 +69,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
             (courseDataForInstructorNameForTerm) => {
               const courseDataForInstructorNameForTermByGradeOffered = groupBy(
                 courseDataForInstructorNameForTerm,
-                get("gradeOffered")
+                get("gradeOffered"),
               );
               const gradeCountsForInstructorNameForTermByGradeOffered =
                 mapValues(
@@ -77,25 +77,25 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                   (courseDataForInstructorNameForTermForGradeOffered) => {
                     return sumBy(
                       courseDataForInstructorNameForTermForGradeOffered,
-                      compose(Number, get("gradeCount"))
+                      compose(Number, get("gradeCount")),
                     );
-                  }
+                  },
                 );
               return gradeCountsForInstructorNameForTermByGradeOffered;
-            }
+            },
           );
-        }
+        },
       ),
-    [courseDataByInstructorNameByTerm]
+    [courseDataByInstructorNameByTerm],
   );
 
   const instructorNames = Object.keys(gradeCountsByInstructorNameByTerm);
   const instructorTerms = useMemo(
     () =>
       Object.keys(
-        gradeCountsByInstructorNameByTerm[selectedInstructorName] ?? []
+        gradeCountsByInstructorNameByTerm[selectedInstructorName] ?? [],
       ).sort(compareTerms),
-    [gradeCountsByInstructorNameByTerm, selectedInstructorName]
+    [gradeCountsByInstructorNameByTerm, selectedInstructorName],
   );
 
   useEffect(() => {
@@ -105,7 +105,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
   const gradeCountsForInstructorNameForTerm =
     gradeCountsByInstructorNameByTerm?.[selectedInstructorName]?.[selectedTerm];
   const gradeCountArray = Object.values(
-    gradeCountsForInstructorNameForTerm ?? {}
+    gradeCountsForInstructorNameForTerm ?? {},
   );
   const totalGradeCountForInstructorNameForTerm = sum(gradeCountArray);
   const maxGradeCount = Math.max(...gradeCountArray);
@@ -150,7 +150,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                     const url = new URL(window.location.href);
                     url.searchParams.set(
                       "instructor",
-                      newSelectedInstructorName
+                      newSelectedInstructorName,
                     );
                     history.replaceState({}, "", url);
                   }
@@ -210,7 +210,7 @@ const Distribution = ({ subjectArea, catalogNumber }: DistributionProps) => {
                   // of the max single letter grade count for more spacing on top.
                   max: Math.min(
                     (15 / 14) * maxGradeCount,
-                    totalGradeCountForInstructorNameForTerm
+                    totalGradeCountForInstructorNameForTerm,
                   ),
                 },
               },

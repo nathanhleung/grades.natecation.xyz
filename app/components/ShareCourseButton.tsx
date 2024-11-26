@@ -21,10 +21,10 @@ const ShareCourseButton = ({
       title: `${subjectArea} ${catalogNumber} Grade Distribution`,
       text: `2021-23 grade distributions for ${subjectArea} ${catalogNumber}`,
       url: `${process.env.NEXT_PUBLIC_EXTERNAL_HOST}/${encodeURIComponent(
-        subjectArea
+        subjectArea,
       )}/${encodeURIComponent(catalogNumber)}`,
     }),
-    [subjectArea, catalogNumber]
+    [subjectArea, catalogNumber],
   );
 
   useEffect(() => {

@@ -122,7 +122,7 @@ const Search = ({ onlyInput = false }: SearchProps) => {
           <Input
             className={classNames(
               !selectedSubjectArea && "lg:col-span-2",
-              selectedSubjectArea && "rounded-r-none"
+              selectedSubjectArea && "rounded-r-none",
             )}
             type="text"
             ref={subjectAreaQueryInputRef}
@@ -155,7 +155,7 @@ const Search = ({ onlyInput = false }: SearchProps) => {
             className={classNames(
               "p-4 outline-none text-center text-2xl text-black",
               "font-bold shadow-lg disabled:bg-white rounded",
-              "rounded-l-none transition-all border-uclaBlue border-b-8 focus:border-uclaGold"
+              "rounded-l-none transition-all border-uclaBlue border-b-8 focus:border-uclaGold",
             )}
             type="text"
             ref={catalogNumberQueryInputRef}
@@ -202,7 +202,7 @@ const Search = ({ onlyInput = false }: SearchProps) => {
             courses={Object.keys(instructors[selectedInstructor])
               .map((subjectArea) => {
                 return Object.values(
-                  instructors[selectedInstructor][subjectArea]
+                  instructors[selectedInstructor][subjectArea],
                 );
               })
               .flat()}

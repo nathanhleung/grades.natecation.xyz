@@ -35,7 +35,7 @@ export async function GET() {
           catalogNumber: key,
           nRows: rows.length,
         };
-      }
+      },
     );
   }
 

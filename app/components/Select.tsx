@@ -51,8 +51,8 @@ const Select = ({
         background: isSelected
           ? `rgb(${UCLA_BLUE_RGB})`
           : isFocused
-          ? `rgb(${UCLA_LIGHTEST_BLUE_RGB})`
-          : "white",
+            ? `rgb(${UCLA_LIGHTEST_BLUE_RGB})`
+            : "white",
       };
     },
   };
